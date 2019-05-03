@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+<script> document.addEventListener('touchstart', onTouchStart, {passive: true}); </script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Debian Wireguard SetupEnsure correct kernel headers (Optional) Skip this step if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missi">
+<meta name="keywords" content="wireguard, vpn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wireguard Setup">
+<meta property="og:url" content="mitchellberry.github.io/wireguard-setup/index.html">
+<meta property="og:site_name" content="Cybernated Trove">
+<meta property="og:description" content="Debian Wireguard SetupEnsure correct kernel headers (Optional) Skip this step if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missi">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-12-15T03:35:59.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wireguard Setup">
+<meta name="twitter:description" content="Debian Wireguard SetupEnsure correct kernel headers (Optional) Skip this step if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missi">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="mitchellberry.github.io/wireguard-setup/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Wireguard Setup | Cybernated Trove</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cybernated Trove</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="mitchellberry.github.io/wireguard-setup/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mitchell Berry">
+      <meta itemprop="description" content="An assortment of digital tidbits.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cybernated Trove">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Wireguard Setup
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: December-2018 11:33:02 / Modified: 14:35:59" itemprop="dateCreated datePublished" datetime="2018-12-15T11:33:02+11:00">December-2018</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/debian/" itemprop="url" rel="index"><span itemprop="name">Debian</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Debian-Wireguard-Setup"><a href="#Debian-Wireguard-Setup" class="headerlink" title="Debian Wireguard Setup"></a>Debian Wireguard Setup</h3><h5 id="Ensure-correct-kernel-headers-Optional"><a href="#Ensure-correct-kernel-headers-Optional" class="headerlink" title="Ensure correct kernel headers (Optional)"></a>Ensure correct kernel headers (Optional)</h5><p> <a href="#install">Skip this step</a> if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missing kernel headers, many vps providers automatically handle kernel upgrades and management.  To check current kernel: </p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+<p>  On Linode you’ll likely see:<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">4.14.11-x86_64-linode91</span><br></pre></td></tr></table></figure></p>
+<p>  Distribution supplied kernel:<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">4.9.0-8-amd64</span><br></pre></td></tr></table></figure></p>
+<p>  To install an upstream kernel on a linode:</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt-get install linux-image-amd64 grub2</span><br></pre></td></tr></table></figure>
+<p>  Open /etc/default/grub and modify these variables to match:<br>  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX=&quot;crashkernel=auto rhgb console=ttyS0,19200n8 net.ifnames=0&quot;</span><br><span class="line">GRUB_TERMINAL=serial</span><br><span class="line">GRUB_DISABLE_OS_PROBER=true</span><br><span class="line">GRUB_SERIAL_COMMAND=&quot;serial --speed=19200 --unit=0 --word=8 --parity=no --stop=1&quot;</span><br><span class="line">GRUB_DISABLE_LINUX_UUID=true</span><br><span class="line">GRUB_GFXPAYLOAD_LINUX=text</span><br></pre></td></tr></table></figure></p>
+<p>  Then update:<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">update-grub</span><br></pre></td></tr></table></figure></p>
+<p>  Shutdown the linode and set Configuration Profile &gt; Boot Settings &gt; Kernel to GRUB2<br>  Reboot and check kernel again<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure></p>
+<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hostnamectl <span class="built_in">set</span>-hostname WGuard</span><br><span class="line">sudo -i</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb http://deb.debian.org/debian/ unstable main"</span> &gt; /etc/apt/sources.list.d/unstable.list</span><br><span class="line"><span class="built_in">printf</span> <span class="string">'Package: *\nPin: release a=unstable\nPin-Priority: 90\n'</span> &gt; /etc/apt/preferences.d/<span class="built_in">limit</span>-unstable</span><br><span class="line">apt update</span><br><span class="line">apt install wireguard -y</span><br></pre></td></tr></table></figure>
+<h5 id="Server-Setup"><a href="#Server-Setup" class="headerlink" title="Server Setup"></a>Server Setup</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">umask</span> 077</span><br><span class="line">wg genkey | tee privatekey | wg pubkey &gt; publickey</span><br><span class="line"><span class="comment"># Replace &lt;Private Key&gt; and &lt;Address&gt;</span></span><br><span class="line"><span class="built_in">printf</span> <span class="string">'[Interface]</span></span><br><span class="line"><span class="string">PrivateKey = &lt;Private Key&gt;</span></span><br><span class="line"><span class="string">Address = &lt;IPv4 Address&gt;, &lt;IPv6 Address&gt;</span></span><br><span class="line"><span class="string">ListenPort = 51820</span></span><br><span class="line"><span class="string">PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; ip6tables -A FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</span></span><br><span class="line"><span class="string">PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE; ip6tables -D FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -D POSTROUTING -o eth0 -j MASQUERADE</span></span><br><span class="line"><span class="string">SaveConfig = true'</span> &gt; /etc/wireguard/wg0.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># Open firewall</span></span><br><span class="line">sudo ufw allow 51820/udp</span><br><span class="line">sudo ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+<h3 id="Client-installation"><a href="#Client-installation" class="headerlink" title="Client installation"></a>Client installation</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo -i</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb http://deb.debian.org/debian/ unstable main"</span> &gt; /etc/apt/sources.list.d/unstable.list</span><br><span class="line"><span class="built_in">printf</span> <span class="string">'Package: *\nPin: release a=unstable\nPin-Priority: 90\n'</span> &gt; /etc/apt/preferences.d/<span class="built_in">limit</span>-unstable</span><br><span class="line">apt update</span><br><span class="line">apt install wireguard</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"alias wgup='wg-quick up wg0'"</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"alias wgdown='wg-quick down wg0'"</span> &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir wg &amp;&amp; <span class="built_in">cd</span> wg</span><br><span class="line"><span class="built_in">umask</span> 077</span><br><span class="line">wg genkey | tee privatekey | wg pubkey &gt; publickey</span><br><span class="line"><span class="built_in">printf</span> <span class="string">"[Interface]</span></span><br><span class="line"><span class="string">PrivateKey = &lt;private key&gt;</span></span><br><span class="line"><span class="string">Address = 192.168.3.2</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Peer]</span></span><br><span class="line"><span class="string">PublicKey = &lt;Server Public key&gt;</span></span><br><span class="line"><span class="string">Endpoint = &lt;Server Public IP&gt;:51820</span></span><br><span class="line"><span class="string">AllowedIPs = 0.0.0.0/0, ::/0</span></span><br><span class="line"><span class="string">"</span> &gt; /etc/wireguard/wg0.conf</span><br><span class="line"></span><br><span class="line">wg-quick up wg0</span><br><span class="line">systemctl <span class="built_in">enable</span> wg-quick@wg0</span><br><span class="line"></span><br><span class="line"><span class="comment"># confirm</span></span><br><span class="line">wg</span><br><span class="line"></span><br><span class="line"><span class="comment"># interface: wg0</span></span><br><span class="line"><span class="comment">#  public key: &lt;Client Public Key&gt;</span></span><br><span class="line"><span class="comment">#  private key: (hidden)</span></span><br><span class="line"><span class="comment">#  listening port: 46052</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># peer: &lt;Server Public Key&gt;</span></span><br><span class="line"><span class="comment">#  endpoint: 234.121.12.42:51820</span></span><br><span class="line"><span class="comment">#  allowed ips: 0.0.0.0/0, ::/0</span></span><br><span class="line"><span class="comment"># latest handshake: 1 minute, 35 seconds ago</span></span><br><span class="line"><span class="comment"># transfer: 15.56 MiB received, 676.48 KiB sent</span></span><br><span class="line"><span class="comment"># persistent keepalive: every 25 seconds</span></span><br><span class="line"></span><br><span class="line">wg-quick save wg0</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/wireguard-vpn/" rel="tag"># wireguard, vpn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/tmux-configuration/" rel="next" title="Tmux Configuration">
+                <i class="fa fa-chevron-left"></i> Tmux Configuration
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/debugging-rust-with-vscode/" rel="prev" title="Debugging Rust With VSCode">
+                Debugging Rust With VSCode <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Mitchell Berry</p>
+              <div class="site-description motion-element" itemprop="description">An assortment of digital tidbits.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Debian-Wireguard-Setup"><span class="nav-number">1.</span> <span class="nav-text">Debian Wireguard Setup</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Ensure-correct-kernel-headers-Optional"><span class="nav-number">1.0.1.</span> <span class="nav-text">Ensure correct kernel headers (Optional)</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#Install"><span class="nav-number">2.</span> <span class="nav-text">Install</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Server-Setup"><span class="nav-number">2.0.1.</span> <span class="nav-text">Server Setup</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-installation"><span class="nav-number">3.</span> <span class="nav-text">Client installation</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mitchell Berry</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+<script>
+    $('.highlight').prepend($('<button>').addClass('copy-btn')
+        .append("Copy").on('click', function(e) {
+        console.log(e);
+        var code = $(e.target).parent().find('.code').find('.line').map(function(i, e){
+        return $(e).text()
+      }).toArray().join('\n')
+      e.currentTarget.textContent = 'Copied!';
+      revertButton(e, 5000);
+      var ta = document.createElement('textarea')
+      document.body.appendChild(ta)
+      ta.style.position = 'fixed'
+      ta.style.top = 0
+      ta.style.left = 0
+      ta.value = code
+      ta.select()
+      ta.focus()
+      document.execCommand('copy')
+      document.body.removeChild(ta)
+
+    }))
+    function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async function revertButton(e, time){
+        await sleep(time);
+        e.currentTarget.textContent = 'Copy';
+    }
+</script>
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
