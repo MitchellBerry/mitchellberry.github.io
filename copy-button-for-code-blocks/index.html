@@ -58,11 +58,17 @@
   
 
   
+    
+      
+    
+
+    
+  
 
   
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Hack:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -116,27 +122,25 @@
   };
 </script>
 
-<script> document.addEventListener('touchstart', onTouchStart, {passive: true}); </script>
-
 
   
 
 
 
 
-  <meta name="description" content="There’s a few frameworks out there like clipboard.js and code-box-copy but after some messing around a simpler solution seems to be a little bit of jQuery.">
+  <meta name="description" content="There’s a few frameworks out there like clipboard.js and code-box-copy but after some messing around a simpler solution seems to be a little bit of jQuery. To use a clipboard image or for different te">
 <meta name="keywords" content="webdev">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Copy Button for Code Blocks">
 <meta property="og:url" content="mitchellberry.github.io/copy-button-for-code-blocks/index.html">
-<meta property="og:site_name" content="Cybernated Trove">
-<meta property="og:description" content="There’s a few frameworks out there like clipboard.js and code-box-copy but after some messing around a simpler solution seems to be a little bit of jQuery.">
+<meta property="og:site_name" content="Cybernated">
+<meta property="og:description" content="There’s a few frameworks out there like clipboard.js and code-box-copy but after some messing around a simpler solution seems to be a little bit of jQuery. To use a clipboard image or for different te">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="/images/clippy.svg">
-<meta property="og:updated_time" content="2019-05-03T00:13:33.591Z">
+<meta property="og:updated_time" content="2019-05-07T10:58:37.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Copy Button for Code Blocks">
-<meta name="twitter:description" content="There’s a few frameworks out there like clipboard.js and code-box-copy but after some messing around a simpler solution seems to be a little bit of jQuery.">
+<meta name="twitter:description" content="There’s a few frameworks out there like clipboard.js and code-box-copy but after some messing around a simpler solution seems to be a little bit of jQuery. To use a clipboard image or for different te">
 <meta name="twitter:image" content="/images/clippy.svg">
 
 
@@ -155,7 +159,7 @@
   };
 </script>
 
-  <title>Copy Button for Code Blocks | Cybernated Trove</title>
+  <title>Copy Button for Code Blocks | Cybernated</title>
   
 
 
@@ -214,7 +218,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cybernated Trove</span>
+        <span class="site-title">Cybernated</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -252,6 +256,40 @@
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
         
@@ -329,7 +367,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated Trove">
+      <meta itemprop="name" content="Cybernated">
     </span>
 
     
@@ -367,24 +405,26 @@
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: May-2019 10:13:33" itemprop="dateModified" datetime="2019-05-03T10:13:33+10:00">May-2019</time>
-              
-            
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -415,8 +455,8 @@
 
       
         <p>There’s a few frameworks out there like clipboard.js and code-box-copy but after some messing around a simpler solution seems to be a little bit of jQuery.</p>
-<a id="more"></a>
 <p>To use a clipboard image or for different text modify the clippy element. Note that jQuery doesn’t <em>officially</em> support SVG images but had no problem embedding one here. The copied text box reverts after 5 seconds using a promise to sleep.</p>
+<a id="more"></a>
 <p>As an after-footer script (or anywhere after loading jQuery):</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> clippy = <span class="string">"Copy"</span>;</span><br><span class="line">$(<span class="string">'.highlight'</span>).prepend($(<span class="string">'&lt;button&gt;'</span>).addClass(<span class="string">'copy-btn'</span>)</span><br><span class="line">    .append(clippy).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e);</span><br><span class="line">    <span class="keyword">var</span> code = $(e.target).parent().find(<span class="string">'.code'</span>).find(<span class="string">'.line'</span>).map(<span class="function"><span class="keyword">function</span>(<span class="params">i, e</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $(e).text()</span><br><span class="line">    &#125;).toArray().join(<span class="string">'\n'</span>)</span><br><span class="line">    e.currentTarget.textContent = <span class="string">'Copied!'</span>;</span><br><span class="line">    revertButton(e, <span class="number">5000</span>);</span><br><span class="line">    <span class="keyword">var</span> ta = <span class="built_in">document</span>.createElement(<span class="string">'textarea'</span>)</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(ta)</span><br><span class="line">    ta.style.position = <span class="string">'fixed'</span></span><br><span class="line">    ta.style.top = <span class="number">0</span></span><br><span class="line">    ta.style.left = <span class="number">0</span></span><br><span class="line">    ta.value = code</span><br><span class="line">    ta.select()</span><br><span class="line">    ta.focus()</span><br><span class="line">    <span class="built_in">document</span>.execCommand(<span class="string">'copy'</span>)</span><br><span class="line">    <span class="built_in">document</span>.body.removeChild(ta)</span><br><span class="line"></span><br><span class="line">&#125;))</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sleep</span>(<span class="params">ms</span>) </span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> setTimeout(resolve, ms));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">revertButton</span>(<span class="params">e, time</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">await</span> sleep(time);</span><br><span class="line">    e.currentTarget.textContent = <span class="string">'Copy'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Bop it! Twist it! Style it:</p>
@@ -553,30 +593,36 @@
                 <div class="site-state-item site-state-categories">
                   
                     
+                      <a href="/categories/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">categories</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
                 </div>
               
 
@@ -586,60 +632,104 @@
                 <div class="site-state-item site-state-tags">
                   
                     
+                      <a href="/tags/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">tags</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
                 </div>
               
             </nav>

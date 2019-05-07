@@ -58,11 +58,17 @@
   
 
   
+    
+      
+    
+
+    
+  
 
   
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Hack:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -116,26 +122,24 @@
   };
 </script>
 
-<script> document.addEventListener('touchstart', onTouchStart, {passive: true}); </script>
-
 
   
 
 
 
 
-  <meta name="description" content="Deep Speech installUbuntu Server 18.10 Install Git Large File Storagesudo apt update &amp;amp;&amp;amp; sudo apt -y upgrade &amp;amp;&amp;amp; curl -s https://packagecloud.io/install/repositories/github/git-lfs/scrip">
-<meta name="keywords" content="Deep Speech, Tensorflow, Machine Learning">
+  <meta name="description" content="DeepSpeech is text-to-speech engine made by Mozilla based on Baidu’s research. It uses Tensorflow. This is a guide to installing it on Debian.">
+<meta name="keywords" content="Deep Speech,Tensorflow,Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Deep Speech Install">
 <meta property="og:url" content="mitchellberry.github.io/deep-speech-install/index.html">
-<meta property="og:site_name" content="Cybernated Trove">
-<meta property="og:description" content="Deep Speech installUbuntu Server 18.10 Install Git Large File Storagesudo apt update &amp;amp;&amp;amp; sudo apt -y upgrade &amp;amp;&amp;amp; curl -s https://packagecloud.io/install/repositories/github/git-lfs/scrip">
+<meta property="og:site_name" content="Cybernated">
+<meta property="og:description" content="DeepSpeech is text-to-speech engine made by Mozilla based on Baidu’s research. It uses Tensorflow. This is a guide to installing it on Debian.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-22T02:21:09.529Z">
+<meta property="og:updated_time" content="2019-05-07T11:03:22.987Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep Speech Install">
-<meta name="twitter:description" content="Deep Speech installUbuntu Server 18.10 Install Git Large File Storagesudo apt update &amp;amp;&amp;amp; sudo apt -y upgrade &amp;amp;&amp;amp; curl -s https://packagecloud.io/install/repositories/github/git-lfs/scrip">
+<meta name="twitter:description" content="DeepSpeech is text-to-speech engine made by Mozilla based on Baidu’s research. It uses Tensorflow. This is a guide to installing it on Debian.">
 
 
 
@@ -153,7 +157,7 @@
   };
 </script>
 
-  <title>Deep Speech Install | Cybernated Trove</title>
+  <title>Deep Speech Install | Cybernated</title>
   
 
 
@@ -212,7 +216,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cybernated Trove</span>
+        <span class="site-title">Cybernated</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -250,6 +254,40 @@
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
         
@@ -327,7 +365,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated Trove">
+      <meta itemprop="name" content="Cybernated">
     </span>
 
     
@@ -361,13 +399,9 @@
                 
               
 
-              <time title="Created: September-2018 10:18:59 / Modified: 12:21:09" itemprop="dateCreated datePublished" datetime="2018-09-22T10:18:59+10:00">September-2018</time>
+              <time title="Created: September-2018 10:18:59" itemprop="dateCreated datePublished" datetime="2018-09-22T10:18:59+10:00">September-2018</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -418,7 +452,9 @@
       
 
       
-        <h3 id="Deep-Speech-install"><a href="#Deep-Speech-install" class="headerlink" title="Deep Speech install"></a>Deep Speech install</h3><p>Ubuntu Server 18.10</p>
+        <p>DeepSpeech is text-to-speech engine made by Mozilla based on <a href="https://arxiv.org/abs/1412.5567" target="_blank" rel="noopener">Baidu’s research</a>. It uses Tensorflow. This is a guide to installing it on Debian.</p>
+<a id="more"></a>
+<h3 id="Deep-Speech-install"><a href="#Deep-Speech-install" class="headerlink" title="Deep Speech install"></a>Deep Speech install</h3><p>Ubuntu Server 18.10</p>
 <h5 id="Install-Git-Large-File-Storage"><a href="#Install-Git-Large-File-Storage" class="headerlink" title="Install Git Large File Storage"></a>Install Git Large File Storage</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt -y upgrade &amp;&amp; </span><br><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash &amp;&amp;</span><br><span class="line">sudo apt-get install git-lfs &amp;&amp;</span><br><span class="line">git lfs install</span><br></pre></td></tr></table></figure>
 <h5 id="Grab-pre-trained-model"><a href="#Grab-pre-trained-model" class="headerlink" title="Grab pre-trained model"></a>Grab pre-trained model</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://github.com/mozilla/DeepSpeech/releases/download/v0.4.1/deepspeech-0.4.1-models.tar.gz &amp;&amp;</span><br><span class="line">tar xvfz deepspeech-0.4.1-models.tar.gz</span><br></pre></td></tr></table></figure>
 <h5 id="CUDA-dependencies"><a href="#CUDA-dependencies" class="headerlink" title="CUDA dependencies"></a>CUDA dependencies</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update &amp;&amp; </span><br><span class="line">sudo apt install -y gcc build-essential freeglut3 freeglut3-dev libxi-dev libxmu-dev dkms</span><br></pre></td></tr></table></figure>
@@ -448,7 +484,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/deep-speech-tensorflow-machine-learning/" rel="tag"># Deep Speech, Tensorflow, Machine Learning</a>
+            <a href="/tags/deep-speech/" rel="tag"># Deep Speech</a>
+          
+            <a href="/tags/tensorflow/" rel="tag"># Tensorflow</a>
+          
+            <a href="/tags/machine-learning/" rel="tag"># Machine Learning</a>
           
         </div>
       
@@ -554,30 +594,36 @@
                 <div class="site-state-item site-state-categories">
                   
                     
+                      <a href="/categories/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">categories</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
                 </div>
               
 
@@ -587,60 +633,104 @@
                 <div class="site-state-item site-state-tags">
                   
                     
+                      <a href="/tags/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">tags</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
                 </div>
               
             </nav>

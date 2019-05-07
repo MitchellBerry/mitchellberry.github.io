@@ -58,11 +58,17 @@
   
 
   
+    
+      
+    
+
+    
+  
 
   
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Hack:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -116,26 +122,24 @@
   };
 </script>
 
-<script> document.addEventListener('touchstart', onTouchStart, {passive: true}); </script>
-
 
   
 
 
 
 
-  <meta name="description" content="Factomd installation script, requires Go, git and Glide. Golang installation instructions here">
-<meta name="keywords" content="Factom, Debian">
+  <meta name="description" content="Factomd installation script for Debian, requires Go, git and Glide.">
+<meta name="keywords" content="Debian,Factom">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Factomd Node Install">
 <meta property="og:url" content="mitchellberry.github.io/factomd-node-install/index.html">
-<meta property="og:site_name" content="Cybernated Trove">
-<meta property="og:description" content="Factomd installation script, requires Go, git and Glide. Golang installation instructions here">
+<meta property="og:site_name" content="Cybernated">
+<meta property="og:description" content="Factomd installation script for Debian, requires Go, git and Glide.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-08-19T04:18:32.787Z">
+<meta property="og:updated_time" content="2019-05-07T11:03:53.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Factomd Node Install">
-<meta name="twitter:description" content="Factomd installation script, requires Go, git and Glide. Golang installation instructions here">
+<meta name="twitter:description" content="Factomd installation script for Debian, requires Go, git and Glide.">
 
 
 
@@ -153,7 +157,7 @@
   };
 </script>
 
-  <title>Factomd Node Install | Cybernated Trove</title>
+  <title>Factomd Node Install | Cybernated</title>
   
 
 
@@ -212,7 +216,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cybernated Trove</span>
+        <span class="site-title">Cybernated</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -250,6 +254,40 @@
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
         
@@ -327,7 +365,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated Trove">
+      <meta itemprop="name" content="Cybernated">
     </span>
 
     
@@ -361,25 +399,9 @@
                 
               
 
-              <time title="Created: June-2018 07:52:40" itemprop="dateCreated datePublished" datetime="2018-06-05T07:52:40+10:00">June-2018</time>
+              <time title="Created: June-2017 07:52:40" itemprop="dateCreated datePublished" datetime="2017-06-05T07:52:40+10:00">June-2017</time>
             
 
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: August-2018 14:18:32" itemprop="dateModified" datetime="2018-08-19T14:18:32+10:00">August-2018</time>
-              
             
           </span>
 
@@ -412,8 +434,9 @@
       
 
       
-        <p>Factomd installation script, requires Go, git and Glide. Golang installation instructions <a href="golang-debian-ubuntu-installation\index.html">here</a></p>
+        <p>Factomd installation script for Debian, requires Go, git and Glide.</p>
 <a id="more"></a>
+<p>Golang installation instructions <a href="golang-debian-ubuntu-installation\index.html">here</a></p>
 <p>Run with root privileges:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">apt install git golang-glide -y</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/FactomProject/factomd <span class="variable">$GOPATH</span>/src/github.com/FactomProject/factomd</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/FactomProject/factomd</span><br><span class="line">glide cc</span><br><span class="line">glide install</span><br><span class="line">go install -ldflags <span class="string">"-X github.com/FactomProject/factomd/engine.Build=`git rev-parse HEAD` -X github.com/FactomProject/factomd/engine.FactomdVersion=`cat VERSION`"</span> -v</span><br><span class="line">whereis factomd</span><br></pre></td></tr></table></figure>
       
@@ -438,7 +461,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/factom-debian/" rel="tag"># Factom, Debian</a>
+            <a href="/tags/debian/" rel="tag"># Debian</a>
+          
+            <a href="/tags/factom/" rel="tag"># Factom</a>
           
         </div>
       
@@ -451,18 +476,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/handy-bash-commands/" rel="next" title="Handy Bash Commands">
-                <i class="fa fa-chevron-left"></i> Handy Bash Commands
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/porting-c-codebases-to-rust/" rel="prev" title="Porting C Codebases to Rust">
-                Porting C Codebases to Rust <i class="fa fa-chevron-right"></i>
+              <a href="/golang-debian-ubuntu-installation/" rel="prev" title="Golang Debian/Ubuntu Installation">
+                Golang Debian/Ubuntu Installation <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -535,30 +556,36 @@
                 <div class="site-state-item site-state-categories">
                   
                     
+                      <a href="/categories/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">categories</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
                 </div>
               
 
@@ -568,60 +595,104 @@
                 <div class="site-state-item site-state-tags">
                   
                     
+                      <a href="/tags/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">tags</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
                 </div>
               
             </nav>

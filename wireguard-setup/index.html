@@ -58,11 +58,17 @@
   
 
   
+    
+      
+    
+
+    
+  
 
   
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Hack:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -116,26 +122,24 @@
   };
 </script>
 
-<script> document.addEventListener('touchstart', onTouchStart, {passive: true}); </script>
-
 
   
 
 
 
 
-  <meta name="description" content="Debian Wireguard SetupEnsure correct kernel headers (Optional) Skip this step if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missi">
-<meta name="keywords" content="wireguard, vpn">
+  <meta name="description" content="Wireguard is a simple, fast and modern VPN that is being integrated into the Linux kernel. Guide is for setting up on Debian Stretch.">
+<meta name="keywords" content="wireguard,vpn,debian">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Wireguard Setup">
 <meta property="og:url" content="mitchellberry.github.io/wireguard-setup/index.html">
-<meta property="og:site_name" content="Cybernated Trove">
-<meta property="og:description" content="Debian Wireguard SetupEnsure correct kernel headers (Optional) Skip this step if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missi">
+<meta property="og:site_name" content="Cybernated">
+<meta property="og:description" content="Wireguard is a simple, fast and modern VPN that is being integrated into the Linux kernel. Guide is for setting up on Debian Stretch.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-12-15T03:35:59.252Z">
+<meta property="og:updated_time" content="2019-05-07T11:17:31.656Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Wireguard Setup">
-<meta name="twitter:description" content="Debian Wireguard SetupEnsure correct kernel headers (Optional) Skip this step if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missi">
+<meta name="twitter:description" content="Wireguard is a simple, fast and modern VPN that is being integrated into the Linux kernel. Guide is for setting up on Debian Stretch.">
 
 
 
@@ -153,7 +157,7 @@
   };
 </script>
 
-  <title>Wireguard Setup | Cybernated Trove</title>
+  <title>Wireguard Setup | Cybernated</title>
   
 
 
@@ -212,7 +216,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cybernated Trove</span>
+        <span class="site-title">Cybernated</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -250,6 +254,40 @@
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
         
@@ -327,7 +365,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated Trove">
+      <meta itemprop="name" content="Cybernated">
     </span>
 
     
@@ -361,13 +399,9 @@
                 
               
 
-              <time title="Created: December-2018 11:33:02 / Modified: 14:35:59" itemprop="dateCreated datePublished" datetime="2018-12-15T11:33:02+11:00">December-2018</time>
+              <time title="Created: December-2018 11:33:02" itemprop="dateCreated datePublished" datetime="2018-12-15T11:33:02+11:00">December-2018</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -383,7 +417,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/debian/" itemprop="url" rel="index"><span itemprop="name">Debian</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/guides/" itemprop="url" rel="index"><span itemprop="name">Guides</span></a></span>
 
                 
                 
@@ -418,7 +452,9 @@
       
 
       
-        <h3 id="Debian-Wireguard-Setup"><a href="#Debian-Wireguard-Setup" class="headerlink" title="Debian Wireguard Setup"></a>Debian Wireguard Setup</h3><h5 id="Ensure-correct-kernel-headers-Optional"><a href="#Ensure-correct-kernel-headers-Optional" class="headerlink" title="Ensure correct kernel headers (Optional)"></a>Ensure correct kernel headers (Optional)</h5><p> <a href="#install">Skip this step</a> if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missing kernel headers, many vps providers automatically handle kernel upgrades and management.  To check current kernel: </p>
+        <p>Wireguard is a simple, fast and modern VPN that is being integrated into the Linux kernel. Guide is for setting up on Debian Stretch.</p>
+<a id="more"></a>
+<h5 id="Ensure-correct-kernel-headers-Optional"><a href="#Ensure-correct-kernel-headers-Optional" class="headerlink" title="Ensure correct kernel headers (Optional)"></a>Ensure correct kernel headers (Optional)</h5><p> <a href="#install">Skip this step</a> if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missing kernel headers, many vps providers automatically handle kernel upgrades and management.  To check current kernel: </p>
   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
 <p>  On Linode you’ll likely see:<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">4.14.11-x86_64-linode91</span><br></pre></td></tr></table></figure></p>
 <p>  Distribution supplied kernel:<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">4.9.0-8-amd64</span><br></pre></td></tr></table></figure></p>
@@ -453,7 +489,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/wireguard-vpn/" rel="tag"># wireguard, vpn</a>
+            <a href="/tags/wireguard/" rel="tag"># wireguard</a>
+          
+            <a href="/tags/vpn/" rel="tag"># vpn</a>
+          
+            <a href="/tags/debian/" rel="tag"># debian</a>
           
         </div>
       
@@ -476,8 +516,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/debugging-rust-with-vscode/" rel="prev" title="Debugging Rust With VSCode">
-                Debugging Rust With VSCode <i class="fa fa-chevron-right"></i>
+              <a href="/port-forwarding-to-lxc/" rel="prev" title="Port Forwarding to LXC">
+                Port Forwarding to LXC <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -559,30 +599,36 @@
                 <div class="site-state-item site-state-categories">
                   
                     
+                      <a href="/categories/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">categories</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
                 </div>
               
 
@@ -592,60 +638,104 @@
                 <div class="site-state-item site-state-tags">
                   
                     
+                      <a href="/tags/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">tags</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
                 </div>
               
             </nav>
@@ -681,7 +771,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Debian-Wireguard-Setup"><span class="nav-number">1.</span> <span class="nav-text">Debian Wireguard Setup</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Ensure-correct-kernel-headers-Optional"><span class="nav-number">1.0.1.</span> <span class="nav-text">Ensure correct kernel headers (Optional)</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#Install"><span class="nav-number">2.</span> <span class="nav-text">Install</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Server-Setup"><span class="nav-number">2.0.1.</span> <span class="nav-text">Server Setup</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-installation"><span class="nav-number">3.</span> <span class="nav-text">Client installation</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Ensure-correct-kernel-headers-Optional"><span class="nav-number">1.</span> <span class="nav-text">Ensure correct kernel headers (Optional)</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#Install"><span class="nav-number"></span> <span class="nav-text">Install</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Server-Setup"><span class="nav-number">1.</span> <span class="nav-text">Server Setup</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-installation"><span class="nav-number"></span> <span class="nav-text">Client installation</span></a></li></div>
             
 
           </div>

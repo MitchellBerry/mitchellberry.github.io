@@ -58,11 +58,17 @@
   
 
   
+    
+      
+    
+
+    
+  
 
   
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Hack:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -116,26 +122,24 @@
   };
 </script>
 
-<script> document.addEventListener('touchstart', onTouchStart, {passive: true}); </script>
-
 
   
 
 
 
 
-  <meta name="description" content="Null-routing all the garbage packets a gpu shouldn’t be sending out. Using their GEForce GUI also requires a sign-up now, sigh.">
-<meta name="keywords" content="Nvidia, Telemetry, Privacy, &quot;Corporate Nonsense&quot;">
+  <meta name="description" content="Null-routing all the garbage packets you shouldn’t be sending out. Their GEForce GUI for configuration also requires a sign-up, sigh.">
+<meta name="keywords" content="Nvidia,Telemetry,Privacy,Corporate Nonsense">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Blocking Nvidia Telemetry">
 <meta property="og:url" content="mitchellberry.github.io/blocking-nvidia-telemetry/index.html">
-<meta property="og:site_name" content="Cybernated Trove">
-<meta property="og:description" content="Null-routing all the garbage packets a gpu shouldn’t be sending out. Using their GEForce GUI also requires a sign-up now, sigh.">
+<meta property="og:site_name" content="Cybernated">
+<meta property="og:description" content="Null-routing all the garbage packets you shouldn’t be sending out. Their GEForce GUI for configuration also requires a sign-up, sigh.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-03T01:26:25.057Z">
+<meta property="og:updated_time" content="2019-05-07T10:58:08.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Blocking Nvidia Telemetry">
-<meta name="twitter:description" content="Null-routing all the garbage packets a gpu shouldn’t be sending out. Using their GEForce GUI also requires a sign-up now, sigh.">
+<meta name="twitter:description" content="Null-routing all the garbage packets you shouldn’t be sending out. Their GEForce GUI for configuration also requires a sign-up, sigh.">
 
 
 
@@ -153,7 +157,7 @@
   };
 </script>
 
-  <title>Blocking Nvidia Telemetry | Cybernated Trove</title>
+  <title>Blocking Nvidia Telemetry | Cybernated</title>
   
 
 
@@ -212,7 +216,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cybernated Trove</span>
+        <span class="site-title">Cybernated</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -250,6 +254,40 @@
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
         
@@ -327,7 +365,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated Trove">
+      <meta itemprop="name" content="Cybernated">
     </span>
 
     
@@ -361,13 +399,9 @@
                 
               
 
-              <time title="Created: May-2019 09:26:25 / Modified: 11:26:25" itemprop="dateCreated datePublished" datetime="2019-05-03T09:26:25+10:00">May-2019</time>
+              <time title="Created: May-2019 09:26:25" itemprop="dateCreated datePublished" datetime="2019-05-03T09:26:25+10:00">May-2019</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -418,7 +452,7 @@
       
 
       
-        <p>Null-routing all the garbage packets a gpu shouldn’t be sending out. Using their GEForce GUI also requires a sign-up now, sigh.</p>
+        <p>Null-routing all the garbage packets you shouldn’t be sending out. Their GEForce GUI for configuration also requires a sign-up, sigh.</p>
 <a id="more"></a>
 <p>Full list</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0.0.0.0 telemetry.gfe.nvidia.com </span><br><span class="line">0.0.0.0 gfe.nvidia.com</span><br><span class="line">0.0.0.0 services.gfe.nvidia.com</span><br><span class="line">0.0.0.0 accounts.nvgs.nvidia.com</span><br><span class="line">0.0.0.0 events.gfe.nvidia.com</span><br><span class="line">0.0.0.0 images.nvidiagrid.net</span><br><span class="line">0.0.0.0 rds-assets.nvidia.com</span><br><span class="line">0.0.0.0 assets.nvidiagrid.net</span><br></pre></td></tr></table></figure>
@@ -447,7 +481,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/nvidia-telemetry-privacy-corporate-nonsense/" rel="tag"># Nvidia, Telemetry, Privacy, "Corporate Nonsense"</a>
+            <a href="/tags/nvidia/" rel="tag"># Nvidia</a>
+          
+            <a href="/tags/telemetry/" rel="tag"># Telemetry</a>
+          
+            <a href="/tags/privacy/" rel="tag"># Privacy</a>
+          
+            <a href="/tags/corporate-nonsense/" rel="tag"># Corporate Nonsense</a>
           
         </div>
       
@@ -469,6 +509,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/factom-testnet-auth-node-setup/" rel="prev" title="Factom Testnet Auth Node Setup">
+                Factom Testnet Auth Node Setup <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -540,30 +584,36 @@
                 <div class="site-state-item site-state-categories">
                   
                     
+                      <a href="/categories/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">categories</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
                 </div>
               
 
@@ -573,60 +623,104 @@
                 <div class="site-state-item site-state-tags">
                   
                     
+                      <a href="/tags/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">tags</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
                 </div>
               
             </nav>

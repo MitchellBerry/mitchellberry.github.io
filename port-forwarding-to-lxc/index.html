@@ -58,11 +58,17 @@
   
 
   
+    
+      
+    
+
+    
+  
 
   
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Hack:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -116,26 +122,24 @@
   };
 </script>
 
-<script> document.addEventListener('touchstart', onTouchStart, {passive: true}); </script>
-
 
   
 
 
 
 
-  <meta name="description" content="Port Forwarding to LXC Containerroot@guardwire:~# ip addr show lxcbr0      3: lxcbr0: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default qlen 1000    link/ether 00:1">
-<meta name="keywords" content="LXC, Containers, Netowrking">
+  <meta name="description" content="Networking with Linux containers.">
+<meta name="keywords" content="Containers,LXC,Networking">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Port Forwarding to LXC">
 <meta property="og:url" content="mitchellberry.github.io/port-forwarding-to-lxc/index.html">
-<meta property="og:site_name" content="Cybernated Trove">
-<meta property="og:description" content="Port Forwarding to LXC Containerroot@guardwire:~# ip addr show lxcbr0      3: lxcbr0: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default qlen 1000    link/ether 00:1">
+<meta property="og:site_name" content="Cybernated">
+<meta property="og:description" content="Networking with Linux containers.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-12T06:11:29.737Z">
+<meta property="og:updated_time" content="2019-05-07T11:11:11.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Port Forwarding to LXC">
-<meta name="twitter:description" content="Port Forwarding to LXC Containerroot@guardwire:~# ip addr show lxcbr0      3: lxcbr0: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default qlen 1000    link/ether 00:1">
+<meta name="twitter:description" content="Networking with Linux containers.">
 
 
 
@@ -153,7 +157,7 @@
   };
 </script>
 
-  <title>Port Forwarding to LXC | Cybernated Trove</title>
+  <title>Port Forwarding to LXC | Cybernated</title>
   
 
 
@@ -212,7 +216,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cybernated Trove</span>
+        <span class="site-title">Cybernated</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -250,6 +254,40 @@
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
         
@@ -327,7 +365,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated Trove">
+      <meta itemprop="name" content="Cybernated">
     </span>
 
     
@@ -361,13 +399,9 @@
                 
               
 
-              <time title="Created: January-2019 14:10:37 / Modified: 17:11:29" itemprop="dateCreated datePublished" datetime="2019-01-12T14:10:37+11:00">January-2019</time>
+              <time title="Created: January-2019 14:10:37" itemprop="dateCreated datePublished" datetime="2019-01-12T14:10:37+11:00">January-2019</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -418,7 +452,9 @@
       
 
       
-        <h3 id="Port-Forwarding-to-LXC-Container"><a href="#Port-Forwarding-to-LXC-Container" class="headerlink" title="Port Forwarding to LXC Container"></a>Port Forwarding to LXC Container</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@guardwire:~<span class="comment"># ip addr show lxcbr0      </span></span><br><span class="line">3: lxcbr0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default qlen 1000</span><br><span class="line">    link/ether 00:16:3e:00:00:00 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.0.3.1/24 scope global lxcbr0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::216:3eff:fe00:0/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"></span><br><span class="line">root@guardwire:~<span class="comment"># nmap -sn 10.0.3.1/24 </span></span><br><span class="line"></span><br><span class="line">Starting Nmap 7.40 ( https://nmap.org ) at 2019-04-09 02:54 UTC</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.144</span><br><span class="line">Host is up (0.000012s latency).</span><br><span class="line">MAC Address: 00:16:3E:F8:C4:92 (Xensource)</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.1</span><br><span class="line">Host is up.</span><br><span class="line">Nmap <span class="keyword">done</span>: 256 IP addresses (2 hosts up) scanned <span class="keyword">in</span> 3.90 seconds</span><br></pre></td></tr></table></figure>
+        <p>Networking with Linux containers.</p>
+<a id="more"></a>
+<h3 id="Port-Forwarding-to-LXC-Container"><a href="#Port-Forwarding-to-LXC-Container" class="headerlink" title="Port Forwarding to LXC Container"></a>Port Forwarding to LXC Container</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@guardwire:~<span class="comment"># ip addr show lxcbr0      </span></span><br><span class="line">3: lxcbr0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default qlen 1000</span><br><span class="line">    link/ether 00:16:3e:00:00:00 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.0.3.1/24 scope global lxcbr0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::216:3eff:fe00:0/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"></span><br><span class="line">root@guardwire:~<span class="comment"># nmap -sn 10.0.3.1/24 </span></span><br><span class="line"></span><br><span class="line">Starting Nmap 7.40 ( https://nmap.org ) at 2019-04-09 02:54 UTC</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.144</span><br><span class="line">Host is up (0.000012s latency).</span><br><span class="line">MAC Address: 00:16:3E:F8:C4:92 (Xensource)</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.1</span><br><span class="line">Host is up.</span><br><span class="line">Nmap <span class="keyword">done</span>: 256 IP addresses (2 hosts up) scanned <span class="keyword">in</span> 3.90 seconds</span><br></pre></td></tr></table></figure>
 <p>Check port 1812 is accepting udp pings:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -sU 10.0.3.144 -p 1812</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tarting Nmap 7.40 ( https://nmap.org ) at 2019-04-09 03:08 UTC</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.144</span><br><span class="line">Host is up (-0.20s latency).</span><br><span class="line">PORT     STATE         SERVICE</span><br><span class="line">1812/udp open|filtered radius</span><br><span class="line">MAC Address: 00:16:3E:F8:C4:92 (Xensource)</span><br></pre></td></tr></table></figure>
@@ -448,7 +484,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/lxc-containers-netowrking/" rel="tag"># LXC, Containers, Netowrking</a>
+            <a href="/tags/containers/" rel="tag"># Containers</a>
+          
+            <a href="/tags/lxc/" rel="tag"># LXC</a>
+          
+            <a href="/tags/networking/" rel="tag"># Networking</a>
           
         </div>
       
@@ -461,8 +501,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/debugging-rust-with-vscode/" rel="next" title="Debugging Rust With VSCode">
-                <i class="fa fa-chevron-left"></i> Debugging Rust With VSCode
+              <a href="/wireguard-setup/" rel="next" title="Wireguard Setup">
+                <i class="fa fa-chevron-left"></i> Wireguard Setup
               </a>
             
           </div>
@@ -554,30 +594,36 @@
                 <div class="site-state-item site-state-categories">
                   
                     
+                      <a href="/categories/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">categories</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
                 </div>
               
 
@@ -587,60 +633,104 @@
                 <div class="site-state-item site-state-tags">
                   
                     
+                      <a href="/tags/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">tags</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
                 </div>
               
             </nav>

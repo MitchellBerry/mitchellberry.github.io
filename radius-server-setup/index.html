@@ -58,11 +58,17 @@
   
 
   
+    
+      
+    
+
+    
+  
 
   
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Hack:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
   
 
 
@@ -116,26 +122,24 @@
   };
 </script>
 
-<script> document.addEventListener('touchstart', onTouchStart, {passive: true}); </script>
-
 
   
 
 
 
 
-  <meta name="description" content="apt update &amp;amp;&amp;amp; apt -y upgrade;apt install -y postgresql postgresql-client git iptables git clone https://github.com/FreeRADIUS/freeradius-server.git &amp;amp;&amp;amp;cd freeradius-server &amp;amp;&amp;amp;git">
-<meta name="keywords" content="Radius, Networking">
+  <meta name="description" content="Radius is the usual backend for WPA2-EAP, a guide to setting it up on a Debian server.">
+<meta name="keywords" content="Networking,Radius">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Radius Server Setup">
 <meta property="og:url" content="mitchellberry.github.io/radius-server-setup/index.html">
-<meta property="og:site_name" content="Cybernated Trove">
-<meta property="og:description" content="apt update &amp;amp;&amp;amp; apt -y upgrade;apt install -y postgresql postgresql-client git iptables git clone https://github.com/FreeRADIUS/freeradius-server.git &amp;amp;&amp;amp;cd freeradius-server &amp;amp;&amp;amp;git">
+<meta property="og:site_name" content="Cybernated">
+<meta property="og:description" content="Radius is the usual backend for WPA2-EAP, a guide to setting it up on a Debian server.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-31T03:04:47.299Z">
+<meta property="og:updated_time" content="2019-05-07T11:12:36.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Radius Server Setup">
-<meta name="twitter:description" content="apt update &amp;amp;&amp;amp; apt -y upgrade;apt install -y postgresql postgresql-client git iptables git clone https://github.com/FreeRADIUS/freeradius-server.git &amp;amp;&amp;amp;cd freeradius-server &amp;amp;&amp;amp;git">
+<meta name="twitter:description" content="Radius is the usual backend for WPA2-EAP, a guide to setting it up on a Debian server.">
 
 
 
@@ -153,7 +157,7 @@
   };
 </script>
 
-  <title>Radius Server Setup | Cybernated Trove</title>
+  <title>Radius Server Setup | Cybernated</title>
   
 
 
@@ -212,7 +216,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Cybernated Trove</span>
+        <span class="site-title">Cybernated</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -250,6 +254,40 @@
     
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
 
   </li>
         
@@ -327,7 +365,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated Trove">
+      <meta itemprop="name" content="Cybernated">
     </span>
 
     
@@ -361,13 +399,9 @@
                 
               
 
-              <time title="Created: January-2019 09:02:22 / Modified: 14:04:47" itemprop="dateCreated datePublished" datetime="2019-01-31T09:02:22+11:00">January-2019</time>
+              <time title="Created: January-2019 09:02:22" itemprop="dateCreated datePublished" datetime="2019-01-31T09:02:22+11:00">January-2019</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -400,7 +434,9 @@
       
 
       
-        <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt -y upgrade;</span><br><span class="line">apt install -y postgresql postgresql-client git iptables</span><br></pre></td></tr></table></figure>
+        <p>Radius is the usual backend for WPA2-EAP, a guide to setting it up on a Debian server.</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update &amp;&amp; apt -y upgrade;</span><br><span class="line">apt install -y postgresql postgresql-client git iptables</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/FreeRADIUS/freeradius-server.git &amp;&amp;</span><br><span class="line"><span class="built_in">cd</span> freeradius-server &amp;&amp;</span><br><span class="line">git checkout release_3_0_18 &amp;&amp;</span><br><span class="line">apt install -y devscripts quilt debhelper fakeroot equivs &amp;&amp;</span><br><span class="line">fakeroot debian/rules debian/control &amp;&amp;</span><br><span class="line">fakeroot debian/rules clean &amp;&amp;</span><br><span class="line">mk-build-deps -ir debian/control &amp;&amp;</span><br><span class="line">make deb &amp;&amp;</span><br><span class="line">dpkg -i ../*.deb;</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chown freerad:freerad -R /etc/freeradius/</span><br><span class="line">su postgres &amp;&amp; <span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure>
 <p>Create <strong>postgres</strong> user named freerad, default password is radpass, using a different password it must also be changed in radiusd.conf<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">createuser -P -s freerad</span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">su -s /bin/bash freerad</span><br><span class="line">createdb radius</span><br></pre></td></tr></table></figure></p>
@@ -436,7 +472,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/radius-networking/" rel="tag"># Radius, Networking</a>
+            <a href="/tags/networking/" rel="tag"># Networking</a>
+          
+            <a href="/tags/radius/" rel="tag"># Radius</a>
           
         </div>
       
@@ -542,30 +580,36 @@
                 <div class="site-state-item site-state-categories">
                   
                     
+                      <a href="/categories/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">categories</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
                 </div>
               
 
@@ -575,60 +619,104 @@
                 <div class="site-state-item site-state-tags">
                   
                     
+                      <a href="/tags/">
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">tags</span>
                   
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
                 </div>
               
             </nav>
