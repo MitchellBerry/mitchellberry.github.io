@@ -454,10 +454,15 @@
       
         <p>A rough outline of some useful Docker setups.</p>
 <a id="more"></a>
+
 <h3 id="Pulling-in-Images"><a href="#Pulling-in-Images" class="headerlink" title="Pulling in Images"></a>Pulling in Images</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull rust</span><br></pre></td></tr></table></figure>
+
 <h3 id="Create-a-new-volume-persistent-data-store"><a href="#Create-a-new-volume-persistent-data-store" class="headerlink" title="Create a new volume (persistent data store)"></a>Create a new volume (persistent data store)</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker volume create my-volume;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add a volume driver</span></span><br><span class="line">docker plugin install --grant-all-permissions vieux/sshfs;</span><br><span class="line">docker volume create --driver vieux/sshfs \</span><br><span class="line">  -o sshcmd=<span class="built_in">test</span>@node2:/home/<span class="built_in">test</span> \</span><br><span class="line">  -o password=testpassword \</span><br><span class="line">  my-volume-with-driver</span><br></pre></td></tr></table></figure>
+
 <h3 id="Run-a-command-interactively-in-a-new-container-mount-volume-and-publish-ports"><a href="#Run-a-command-interactively-in-a-new-container-mount-volume-and-publish-ports" class="headerlink" title="Run a command interactively in a new container, mount volume and publish ports"></a>Run a command interactively in a new container, mount volume and publish ports</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -it -p 80:80 --name <span class="built_in">test</span> --mount <span class="built_in">source</span>=hyper-server,target=/home server</span><br><span class="line"></span><br><span class="line"><span class="comment"># With driver</span></span><br><span class="line">docker run -d \</span><br><span class="line">  --name sshfs-container \</span><br><span class="line">  --volume-driver vieux/sshfs \</span><br><span class="line">  --mount src=my-volume-with-driver,target=/app,volume-opt=sshcmd=<span class="built_in">test</span>@node2:/home/<span class="built_in">test</span>,volume-opt=password=testpassword \</span><br><span class="line">  nginx:latest</span><br></pre></td></tr></table></figure>
+
 <h3 id="Copy-from-running-container"><a href="#Copy-from-running-container" class="headerlink" title="Copy from running container"></a>Copy from running container</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker cp &lt;container-name&gt;:/home/server ~/backup</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -577,7 +582,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -612,11 +617,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -723,7 +724,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

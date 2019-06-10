@@ -129,14 +129,14 @@
 
 
   <meta name="description" content="Factomd installation script for Debian, requires Go, git and Glide.">
-<meta name="keywords" content="Debian,Factom">
+<meta name="keywords" content="Factom,Debian">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Factomd Node Install">
 <meta property="og:url" content="mitchellberry.github.io/factomd-node-install/index.html">
 <meta property="og:site_name" content="Cybernated">
 <meta property="og:description" content="Factomd installation script for Debian, requires Go, git and Glide.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-07T11:03:53.860Z">
+<meta property="og:updated_time" content="2019-05-07T11:27:34.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Factomd Node Install">
 <meta name="twitter:description" content="Factomd installation script for Debian, requires Go, git and Glide.">
@@ -406,6 +406,24 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/guides/" itemprop="url" rel="index"><span itemprop="name">Guides</span></a></span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -436,6 +454,7 @@
       
         <p>Factomd installation script for Debian, requires Go, git and Glide.</p>
 <a id="more"></a>
+
 <p>Golang installation instructions <a href="golang-debian-ubuntu-installation\index.html">here</a></p>
 <p>Run with root privileges:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">apt install git golang-glide -y</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/FactomProject/factomd <span class="variable">$GOPATH</span>/src/github.com/FactomProject/factomd</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/FactomProject/factomd</span><br><span class="line">glide cc</span><br><span class="line">glide install</span><br><span class="line">go install -ldflags <span class="string">"-X github.com/FactomProject/factomd/engine.Build=`git rev-parse HEAD` -X github.com/FactomProject/factomd/engine.FactomdVersion=`cat VERSION`"</span> -v</span><br><span class="line">whereis factomd</span><br></pre></td></tr></table></figure>
@@ -461,9 +480,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/debian/" rel="tag"># Debian</a>
-          
             <a href="/tags/factom/" rel="tag"># Factom</a>
+          
+            <a href="/tags/debian/" rel="tag"># Debian</a>
           
         </div>
       
@@ -544,7 +563,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -579,11 +598,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -690,7 +705,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

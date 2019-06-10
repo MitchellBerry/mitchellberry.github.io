@@ -454,12 +454,19 @@
       
         <p>DeepSpeech is text-to-speech engine made by Mozilla based on <a href="https://arxiv.org/abs/1412.5567" target="_blank" rel="noopener">Baidu’s research</a>. It uses Tensorflow. This is a guide to installing it on Debian.</p>
 <a id="more"></a>
+
 <h3 id="Deep-Speech-install"><a href="#Deep-Speech-install" class="headerlink" title="Deep Speech install"></a>Deep Speech install</h3><p>Ubuntu Server 18.10</p>
 <h5 id="Install-Git-Large-File-Storage"><a href="#Install-Git-Large-File-Storage" class="headerlink" title="Install Git Large File Storage"></a>Install Git Large File Storage</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt -y upgrade &amp;&amp; </span><br><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash &amp;&amp;</span><br><span class="line">sudo apt-get install git-lfs &amp;&amp;</span><br><span class="line">git lfs install</span><br></pre></td></tr></table></figure>
+
 <h5 id="Grab-pre-trained-model"><a href="#Grab-pre-trained-model" class="headerlink" title="Grab pre-trained model"></a>Grab pre-trained model</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://github.com/mozilla/DeepSpeech/releases/download/v0.4.1/deepspeech-0.4.1-models.tar.gz &amp;&amp;</span><br><span class="line">tar xvfz deepspeech-0.4.1-models.tar.gz</span><br></pre></td></tr></table></figure>
+
 <h5 id="CUDA-dependencies"><a href="#CUDA-dependencies" class="headerlink" title="CUDA dependencies"></a>CUDA dependencies</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update &amp;&amp; </span><br><span class="line">sudo apt install -y gcc build-essential freeglut3 freeglut3-dev libxi-dev libxmu-dev dkms</span><br></pre></td></tr></table></figure>
-<h5 id="CUDA"><a href="#CUDA" class="headerlink" title="CUDA"></a>CUDA</h5><p>Navigate to CUDA Zone for relevant package: <a href="https://developer.nvidia.com/cuda-zone" target="_blank" rel="noopener">https://developer.nvidia.com/cuda-zone</a><br>Note: First attempt produced many drivers failing on a <em>Hash Mismatch Error</em>, strangely on the second attempt this didn’t happen. Apparently is caused sometimes by cdn’s.<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt -y upgrade &amp;&amp;</span><br><span class="line">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1810/x86_64/cuda-repo-ubuntu1810_10.1.105-1_amd64.deb &amp;&amp;</span><br><span class="line">sudo dpkg -i cuda-repo-ubuntu1810_10.1.105-1_amd64.deb &amp;&amp;</span><br><span class="line">sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1810/x86_64/7fa2af80.pub &amp;&amp;</span><br><span class="line">sudo apt update &amp;&amp; sudo apt -y install cuda</span><br></pre></td></tr></table></figure></p>
+
+<h5 id="CUDA"><a href="#CUDA" class="headerlink" title="CUDA"></a>CUDA</h5><p>Navigate to CUDA Zone for relevant package: <a href="https://developer.nvidia.com/cuda-zone" target="_blank" rel="noopener">https://developer.nvidia.com/cuda-zone</a><br>Note: First attempt produced many drivers failing on a <em>Hash Mismatch Error</em>, strangely on the second attempt this didn’t happen. Apparently is caused sometimes by cdn’s.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt -y upgrade &amp;&amp;</span><br><span class="line">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1810/x86_64/cuda-repo-ubuntu1810_10.1.105-1_amd64.deb &amp;&amp;</span><br><span class="line">sudo dpkg -i cuda-repo-ubuntu1810_10.1.105-1_amd64.deb &amp;&amp;</span><br><span class="line">sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1810/x86_64/7fa2af80.pub &amp;&amp;</span><br><span class="line">sudo apt update &amp;&amp; sudo apt -y install cuda</span><br></pre></td></tr></table></figure>
+
 <h5 id="Check-installation"><a href="#Check-installation" class="headerlink" title="Check installation"></a>Check installation</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Reboot then:</span></span><br><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+
 <p>In /usr/local there should be symlinks for cuda 10.0 </p>
 
       
@@ -582,7 +589,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -617,11 +624,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -728,7 +731,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

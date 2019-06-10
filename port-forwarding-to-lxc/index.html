@@ -454,13 +454,18 @@
       
         <p>Networking with Linux containers.</p>
 <a id="more"></a>
+
 <h3 id="Port-Forwarding-to-LXC-Container"><a href="#Port-Forwarding-to-LXC-Container" class="headerlink" title="Port Forwarding to LXC Container"></a>Port Forwarding to LXC Container</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@guardwire:~<span class="comment"># ip addr show lxcbr0      </span></span><br><span class="line">3: lxcbr0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default qlen 1000</span><br><span class="line">    link/ether 00:16:3e:00:00:00 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.0.3.1/24 scope global lxcbr0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::216:3eff:fe00:0/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"></span><br><span class="line">root@guardwire:~<span class="comment"># nmap -sn 10.0.3.1/24 </span></span><br><span class="line"></span><br><span class="line">Starting Nmap 7.40 ( https://nmap.org ) at 2019-04-09 02:54 UTC</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.144</span><br><span class="line">Host is up (0.000012s latency).</span><br><span class="line">MAC Address: 00:16:3E:F8:C4:92 (Xensource)</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.1</span><br><span class="line">Host is up.</span><br><span class="line">Nmap <span class="keyword">done</span>: 256 IP addresses (2 hosts up) scanned <span class="keyword">in</span> 3.90 seconds</span><br></pre></td></tr></table></figure>
+
 <p>Check port 1812 is accepting udp pings:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -sU 10.0.3.144 -p 1812</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tarting Nmap 7.40 ( https://nmap.org ) at 2019-04-09 03:08 UTC</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.144</span><br><span class="line">Host is up (-0.20s latency).</span><br><span class="line">PORT     STATE         SERVICE</span><br><span class="line">1812/udp open|filtered radius</span><br><span class="line">MAC Address: 00:16:3E:F8:C4:92 (Xensource)</span><br></pre></td></tr></table></figure>
+
 <p>Radius is responding on port 1812</p>
 <p>Inject rule at top of iptables and forward udp from host:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -I FORWARD -p udp -d 10.0.3.144 --dport 1812 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -582,7 +587,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -617,11 +622,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -728,7 +729,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

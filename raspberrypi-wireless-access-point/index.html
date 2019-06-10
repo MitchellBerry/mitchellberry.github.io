@@ -454,22 +454,43 @@
       
         <p>Delving into the wifi adapter of a Raspberry Pi 3 and it’s usage as an access point.</p>
 <a id="more"></a>
+
 <h3 id="Locate-rpi-on-home-network"><a href="#Locate-rpi-on-home-network" class="headerlink" title="Locate rpi on home network"></a>Locate rpi on home network</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nmap -sn 192.168.0.0/16 | awk <span class="string">'/^Nmap/&#123;ip=$NF&#125;/B8:27:EB/&#123;print ip&#125;'</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="SSH-into-rpi"><a href="#SSH-into-rpi" class="headerlink" title="SSH into rpi"></a>SSH into rpi</h3><p>create a empty file named ssh in the boot partition, on startup it will start sshd and then delete the file. To permanently start ssh daemon on boot change the setting in raspi-config’s Interfacing options.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh pi@192.168.42.42</span><br><span class="line"><span class="comment"># password: raspberry</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="Configure-raspian"><a href="#Configure-raspian" class="headerlink" title="Configure raspian"></a>Configure raspian</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure>
+
 <h3 id="How-to-disable-hdmi-circuitry-on-raspian"><a href="#How-to-disable-hdmi-circuitry-on-raspian" class="headerlink" title="How to disable hdmi circuitry on raspian"></a>How to disable hdmi circuitry on raspian</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/usr/bin/tvservice -o</span><br><span class="line"><span class="comment"># re-enable /use/bin/tvservice -p</span></span><br></pre></td></tr></table></figure>
-<h3 id="How-to-disable-Bluetooth-and-wifi"><a href="#How-to-disable-Bluetooth-and-wifi" class="headerlink" title="How to disable Bluetooth and wifi"></a>How to disable Bluetooth and wifi</h3><p>Add following to /boot/config.txt:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dtoverlay=pi3-disable-bt</span><br><span class="line">dtoverlay=pi3-disable-wifi</span><br></pre></td></tr></table></figure></p>
+
+<h3 id="How-to-disable-Bluetooth-and-wifi"><a href="#How-to-disable-Bluetooth-and-wifi" class="headerlink" title="How to disable Bluetooth and wifi"></a>How to disable Bluetooth and wifi</h3><p>Add following to /boot/config.txt: </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dtoverlay=pi3-disable-bt</span><br><span class="line">dtoverlay=pi3-disable-wifi</span><br></pre></td></tr></table></figure>
+
 <h1 id="Creating-an-Access-Point"><a href="#Creating-an-Access-Point" class="headerlink" title="Creating an Access Point"></a>Creating an Access Point</h1><h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt upgrade</span><br><span class="line"><span class="comment"># ensure kernel up to date</span></span><br><span class="line"><span class="comment"># fixes nl80211 problems</span></span><br><span class="line"><span class="comment"># https://raspberrypi.stackexchange.com/questions/92165/raspberry-pi-3b-as-a-wireless-access-point-nl80211-driver-initialization-faile</span></span><br><span class="line">rpi-update</span><br><span class="line"></span><br><span class="line">apt install dnsmasq hostapd</span><br><span class="line"></span><br><span class="line"><span class="comment"># Not configured yet so turn off</span></span><br><span class="line">systemctl stop dnsmasq</span><br><span class="line">systemctl stop hostapd</span><br><span class="line"></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
 <h3 id="Configure-DHCPCD"><a href="#Configure-DHCPCD" class="headerlink" title="Configure DHCPCD"></a>Configure DHCPCD</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span> <span class="string">"interface wlan1</span></span><br><span class="line"><span class="string">static ip_address=192.168.220.1/24</span></span><br><span class="line"><span class="string">static routers=192.168.220.0"</span> &gt;&gt; /etc/dhcpcd.conf</span><br><span class="line">service dhcpcd restart</span><br></pre></td></tr></table></figure>
-<h3 id="Configure-Hostapd"><a href="#Configure-Hostapd" class="headerlink" title="Configure Hostapd"></a>Configure Hostapd</h3><p>Only modifications needed are ssid, wpa_passphrase and perhaps driver<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span> <span class="string">"interface=wlan1</span></span><br><span class="line"><span class="string">driver=nl80211</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">hw_mode=g</span></span><br><span class="line"><span class="string">channel=6</span></span><br><span class="line"><span class="string">ieee80211n=1</span></span><br><span class="line"><span class="string">wmm_enabled=1</span></span><br><span class="line"><span class="string">ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]</span></span><br><span class="line"><span class="string">macaddr_acl=0</span></span><br><span class="line"><span class="string">ignore_broadcast_ssid=0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">auth_algs=1</span></span><br><span class="line"><span class="string">wpa=2</span></span><br><span class="line"><span class="string">wpa_key_mgmt=WPA-PSK</span></span><br><span class="line"><span class="string">rsn_pairwise=CCMP</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ssid=extender</span></span><br><span class="line"><span class="string">wpa_passphrase=raspberry"</span> &gt;&gt; /etc/hostapd/hostapd.conf</span><br></pre></td></tr></table></figure></p>
-<p>Update config default paths<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">'s/#DAEMON_CONF=""/DAEMON_CONF="/etc/hostapd/hostapd.conf/"'</span> /etc/default/hostapd</span><br></pre></td></tr></table></figure></p>
+
+<h3 id="Configure-Hostapd"><a href="#Configure-Hostapd" class="headerlink" title="Configure Hostapd"></a>Configure Hostapd</h3><p>Only modifications needed are ssid, wpa_passphrase and perhaps driver</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">printf</span> <span class="string">"interface=wlan1</span></span><br><span class="line"><span class="string">driver=nl80211</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">hw_mode=g</span></span><br><span class="line"><span class="string">channel=6</span></span><br><span class="line"><span class="string">ieee80211n=1</span></span><br><span class="line"><span class="string">wmm_enabled=1</span></span><br><span class="line"><span class="string">ht_capab=[HT40][SHORT-GI-20][DSSS_CCK-40]</span></span><br><span class="line"><span class="string">macaddr_acl=0</span></span><br><span class="line"><span class="string">ignore_broadcast_ssid=0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">auth_algs=1</span></span><br><span class="line"><span class="string">wpa=2</span></span><br><span class="line"><span class="string">wpa_key_mgmt=WPA-PSK</span></span><br><span class="line"><span class="string">rsn_pairwise=CCMP</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ssid=extender</span></span><br><span class="line"><span class="string">wpa_passphrase=raspberry"</span> &gt;&gt; /etc/hostapd/hostapd.conf</span><br></pre></td></tr></table></figure>
+
+<p>Update config default paths</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">'s/#DAEMON_CONF=""/DAEMON_CONF="/etc/hostapd/hostapd.conf/"'</span> /etc/default/hostapd</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">'s/#DAEMON_CONF=/DAEMON_CONF=/etc/hostapd/hostapd.conf/'</span> /etc/init.d/hostapd</span><br></pre></td></tr></table></figure>
+
 <h3 id="Configure-Dnsmasq"><a href="#Configure-Dnsmasq" class="headerlink" title="Configure Dnsmasq"></a>Configure Dnsmasq</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span> <span class="string">"interface=wlan1       # Use interface wlan1  </span></span><br><span class="line"><span class="string">listen-address=192.168.220.1   # Specify the address to listen on  </span></span><br><span class="line"><span class="string">bind-interfaces      # Bind to the interface</span></span><br><span class="line"><span class="string">server=8.8.8.8       # Use Google DNS  </span></span><br><span class="line"><span class="string">domain-needed        # Don't forward short names  </span></span><br><span class="line"><span class="string">bogus-priv           # Drop the non-routed address spaces.  </span></span><br><span class="line"><span class="string">dhcp-range=192.168.220.50,192.168.220.150,12h # IP range and lease time"</span> &gt; /etc/dnsmasq.conf</span><br></pre></td></tr></table></figure>
+
 <h3 id="Wlan-forwarding"><a href="#Wlan-forwarding" class="headerlink" title="Wlan forwarding"></a>Wlan forwarding</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">'s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/'</span> /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
-<p>Reboot or:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">"echo 1 &gt; /proc/sys/net/ipv4/ip_forward"</span></span><br></pre></td></tr></table></figure></p>
+
+<p>Reboot or:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">"echo 1 &gt; /proc/sys/net/ipv4/ip_forward"</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="Iptables"><a href="#Iptables" class="headerlink" title="Iptables"></a>Iptables</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE  &amp;&amp;</span><br><span class="line">iptables -A FORWARD -i wlan0 -o wlan1 -m state --state RELATED,ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line">iptables -A FORWARD -i wlan1 -o wlan0 -j ACCEPT</span><br></pre></td></tr></table></figure>
-<p>Load rules on boot<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">"iptables-save &gt; /etc/iptables.ipv4.nat"</span> &amp;&amp;</span><br><span class="line">sed -i <span class="string">'s/exit 0/iptables-restore &lt; /etc/iptables.ipv4.nat\nexit 0'</span> iptables-restore &lt; /etc/iptables.ipv4.nat</span><br></pre></td></tr></table></figure></p>
+
+<p>Load rules on boot</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">"iptables-save &gt; /etc/iptables.ipv4.nat"</span> &amp;&amp;</span><br><span class="line">sed -i <span class="string">'s/exit 0/iptables-restore &lt; /etc/iptables.ipv4.nat\nexit 0'</span> iptables-restore &lt; /etc/iptables.ipv4.nat</span><br></pre></td></tr></table></figure>
+
 <h3 id="Start-services"><a href="#Start-services" class="headerlink" title="Start services"></a>Start services</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service hostapd start &amp;&amp;</span><br><span class="line">service dnsmasq start</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -589,7 +610,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -624,11 +645,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -735,7 +752,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

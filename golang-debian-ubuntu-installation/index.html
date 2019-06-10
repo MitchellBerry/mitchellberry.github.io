@@ -454,7 +454,9 @@
       
         <p>Bash script to install a specific Go version, set environmental variables and clean up.</p>
 <a id="more"></a>
+
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">read</span> -p <span class="string">"Enter Go version (e.g 1.7): "</span> version</span><br><span class="line">wget https://dl.google.com/go/go<span class="variable">$version</span>.linux-amd64.tar.gz</span><br><span class="line">sudo tar -C /usr/<span class="built_in">local</span> -xzf go<span class="variable">$version</span>.linux-amd64.tar.gz</span><br><span class="line">rm go<span class="variable">$version</span>.linux-amd64.tar.gz</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"export PATH=<span class="variable">$PATH</span>:/usr/local/go/bin:~/go/bin"</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"export GOPATH=~/go"</span> &gt;&gt; ~/.bashrc<span class="variable">$PATH</span></span><br><span class="line">mkdir ~/go</span><br><span class="line">go version</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"GOPATH: ~/go"</span></span><br><span class="line">bash</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -567,7 +569,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -602,11 +604,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -713,7 +711,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

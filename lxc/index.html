@@ -136,7 +136,7 @@
 <meta property="og:site_name" content="Cybernated">
 <meta property="og:description" content="LXC is the ever-ignored alternative in a docker dominated world. An outline of usage.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-07T11:08:44.796Z">
+<meta property="og:updated_time" content="2019-06-10T04:47:42.494Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LXC">
 <meta name="twitter:description" content="LXC is the ever-ignored alternative in a docker dominated world. An outline of usage.">
@@ -454,15 +454,27 @@
       
         <p>LXC is the ever-ignored alternative in a docker dominated world. An outline of usage.</p>
 <a id="more"></a>
+
 <h1 id="LXC"><a href="#LXC" class="headerlink" title="LXC"></a>LXC</h1><h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install lxc</span><br><span class="line"><span class="comment"># LXD is on Ubuntu</span></span><br><span class="line"><span class="comment"># apt install lxd lxd-client</span></span><br><span class="line"><span class="comment"># Sanp for Debian</span></span><br><span class="line"><span class="comment"># apt install snapd lxd</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><h5 id="Without-lxd"><a href="#Without-lxd" class="headerlink" title="Without lxd"></a>Without lxd</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Create a debian container</span></span><br><span class="line">lxc-create -t debian -n my-new-container &lt;root password&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create an Alpine container using the edge release</span></span><br><span class="line">lxc-create -t alpine -n foo -- -r edge</span><br><span class="line"></span><br><span class="line"><span class="comment"># Verify created</span></span><br><span class="line">lxc-ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start detached</span></span><br><span class="line">lxc-start -n my-new-container -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># Attach</span></span><br><span class="line">lxc-attach -n my-new-container</span><br><span class="line"></span><br><span class="line"><span class="comment"># Attach Error</span></span><br><span class="line"><span class="comment"># Failed to get PID -&gt; Container isn't running: lxc-start</span></span><br></pre></td></tr></table></figure>
+
 <h5 id="With-lxd"><a href="#With-lxd" class="headerlink" title="With lxd"></a>With lxd</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Initialise lxd settings</span></span><br><span class="line">lxd init</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create and start</span></span><br><span class="line">lxc launch ubuntu:bionic my-container</span><br><span class="line"></span><br><span class="line"><span class="comment"># List</span></span><br><span class="line">lxc ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># "Attach"</span></span><br><span class="line">lxc <span class="built_in">exec</span> my-container /bin/bash</span><br></pre></td></tr></table></figure>
+
 <h3 id="Networking"><a href="#Networking" class="headerlink" title="Networking"></a>Networking</h3><p>Disabled by default, in many applications you’ll probably want some networking.</p>
-<p>Missing configuration is sourced from <em>/usr/lib/x86_64-linux-gnu/lxc/lxc-net</em> which contains the default values which means your bridge will be given a subnet of <figure class="highlight plain"><figcaption><span>You can change these values if you want in the */etc/default/lxc-net* file. See defaults below.</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">```bash</span><br><span class="line">echo USE_LXC_BRIDGE=&quot;true&quot; &gt; /etc/default/lxc-net;</span><br><span class="line"></span><br><span class="line">printf &quot;lxc.network.type = veth</span><br><span class="line">lxc.network.link = lxcbr0</span><br><span class="line">lxc.network.flags = up</span><br><span class="line">lxc.network.hwaddr = 00:16:3e:xx:xx:xx&quot; &gt; /etc/lxc/default.conf;</span><br><span class="line"></span><br><span class="line">service lxc-net restart</span><br></pre></td></tr></table></figure></p>
-<p>Newly created containers now have the above configuration. This means they will be using the <figure class="highlight plain"><figcaption><span>bridge created by the lxc-net service</span></figcaption><table><tr><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure></p>
-<p>ip link show<br>21: lxcbr0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default qlen 1000<br>    link/ether 00:16:3e:00:00:00 brd ff:ff:ff:ff:ff:ff<br>    inet 10.0.3.1/24 scope global lxcbr0<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">##### Default values for lxc-net</span><br></pre></td></tr></table></figure></p>
-<p>USE_LXC_BRIDGE=”true”<br>LXC_BRIDGE=”lxcbr0”<br>LXC_ADDR=”10.0.3.1”<br>LXC_NETMASK=”255.255.255.0”<br>LXC_NETWORK=”10.0.3.0/24”<br>LXC_DHCP_RANGE=”10.0.3.2,10.0.3.254”<br>LXC_DHCP_MAX=”253”<br>LXC_DHCP_CONFILE=””<br>LXC_DOMAIN=””<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">### Port Forwarding to Containers</span><br><span class="line">Wireguard Example. Forwarding udp packets on port 51820</span><br><span class="line">```bash</span><br><span class="line">iptables -I FORWARD -i enp0s3 -d 10.0.3.68 -p udp  --dport 51820 -j ACCEPT -m comment --comment &quot;Wireguard portforwarding&quot;</span><br><span class="line">iptables -t nat -A PREROUTING -p udp --dport 51820 -j DNAT --to 10.0.3.68:51820 -m comment --comment &quot;Wireguard&quot;</span><br></pre></td></tr></table></figure></p>
+<p>Missing configuration is sourced from <em>/usr/lib/x86_64-linux-gnu/lxc/lxc-net</em> which contains the default values which means your bridge will be given a subnet of <code>10.0.3.0</code>. You can change these values if you want in the <em>/etc/default/lxc-net</em> file. See defaults below.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> USE_LXC_BRIDGE=<span class="string">"true"</span> &gt; /etc/default/lxc-net;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span> <span class="string">"lxc.network.type = veth</span></span><br><span class="line"><span class="string">lxc.network.link = lxcbr0</span></span><br><span class="line"><span class="string">lxc.network.flags = up</span></span><br><span class="line"><span class="string">lxc.network.hwaddr = 00:16:3e:xx:xx:xx"</span> &gt; /etc/lxc/default.conf;</span><br><span class="line"></span><br><span class="line">service lxc-net restart</span><br></pre></td></tr></table></figure>
+
+<p>Newly created containers now have the above configuration. This means they will be using the <code>lxcbr0</code> bridge created by the lxc-net service</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ip link show</span><br><span class="line">21: lxcbr0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default qlen 1000</span><br><span class="line">    link/ether 00:16:3e:00:00:00 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.0.3.1/24 scope global lxcbr0</span><br></pre></td></tr></table></figure>
+
+<h5 id="Default-values-for-lxc-net"><a href="#Default-values-for-lxc-net" class="headerlink" title="Default values for lxc-net"></a>Default values for lxc-net</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">USE_LXC_BRIDGE=<span class="string">"true"</span></span><br><span class="line">LXC_BRIDGE=<span class="string">"lxcbr0"</span></span><br><span class="line">LXC_ADDR=<span class="string">"10.0.3.1"</span></span><br><span class="line">LXC_NETMASK=<span class="string">"255.255.255.0"</span></span><br><span class="line">LXC_NETWORK=<span class="string">"10.0.3.0/24"</span></span><br><span class="line">LXC_DHCP_RANGE=<span class="string">"10.0.3.2,10.0.3.254"</span></span><br><span class="line">LXC_DHCP_MAX=<span class="string">"253"</span></span><br><span class="line">LXC_DHCP_CONFILE=<span class="string">""</span></span><br><span class="line">LXC_DOMAIN=<span class="string">""</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Port-Forwarding-to-Containers"><a href="#Port-Forwarding-to-Containers" class="headerlink" title="Port Forwarding to Containers"></a>Port Forwarding to Containers</h3><p>Wireguard Example. Forwarding udp packets on port 51820</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -I FORWARD -i enp0s3 -d 10.0.3.68 -p udp  --dport 51820 -j ACCEPT -m comment --comment <span class="string">"Wireguard portforwarding"</span></span><br><span class="line">iptables -t nat -A PREROUTING -p udp --dport 51820 -j DNAT --to 10.0.3.68:51820 -m comment --comment <span class="string">"Wireguard"</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="Filesystem-actions"><a href="#Filesystem-actions" class="headerlink" title="Filesystem actions"></a>Filesystem actions</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># old way</span></span><br><span class="line">cp /var/lib/lxc/my-container/rootfs/etc/hosts ~/hosts</span><br><span class="line"></span><br><span class="line"><span class="comment"># lxd way</span></span><br><span class="line">lxc file pull my-container/etc/hosts</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -582,7 +594,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -617,11 +629,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -728,7 +736,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -766,7 +776,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LXC"><span class="nav-number">1.</span> <span class="nav-text">LXC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Installation"><span class="nav-number">1.0.1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Usage"><span class="nav-number">1.0.2.</span> <span class="nav-text">Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Without-lxd"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">Without lxd</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#With-lxd"><span class="nav-number">1.0.2.0.2.</span> <span class="nav-text">With lxd</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Networking"><span class="nav-number">1.0.3.</span> <span class="nav-text">Networking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filesystem-actions"><span class="nav-number">1.0.4.</span> <span class="nav-text">Filesystem actions</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LXC"><span class="nav-number">1.</span> <span class="nav-text">LXC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Installation"><span class="nav-number">1.0.1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Usage"><span class="nav-number">1.0.2.</span> <span class="nav-text">Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Without-lxd"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">Without lxd</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#With-lxd"><span class="nav-number">1.0.2.0.2.</span> <span class="nav-text">With lxd</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Networking"><span class="nav-number">1.0.3.</span> <span class="nav-text">Networking</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Default-values-for-lxc-net"><span class="nav-number">1.0.3.0.1.</span> <span class="nav-text">Default values for lxc-net</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#Port-Forwarding-to-Containers"><span class="nav-number">1.0.4.</span> <span class="nav-text">Port Forwarding to Containers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filesystem-actions"><span class="nav-number">1.0.5.</span> <span class="nav-text">Filesystem actions</span></a></li></div>
             
 
           </div>

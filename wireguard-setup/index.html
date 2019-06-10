@@ -454,18 +454,24 @@
       
         <p>Wireguard is a simple, fast and modern VPN that is being integrated into the Linux kernel. Guide is for setting up on Debian Stretch.</p>
 <a id="more"></a>
+
 <h5 id="Ensure-correct-kernel-headers-Optional"><a href="#Ensure-correct-kernel-headers-Optional" class="headerlink" title="Ensure correct kernel headers (Optional)"></a>Ensure correct kernel headers (Optional)</h5><p> <a href="#install">Skip this step</a> if using a standard upstream distribution. On a Linode server, due to their custom kernel I ran into problems due to missing kernel headers, many vps providers automatically handle kernel upgrades and management.  To check current kernel: </p>
   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+
 <p>  On Linode you’ll likely see:<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">4.14.11-x86_64-linode91</span><br></pre></td></tr></table></figure></p>
 <p>  Distribution supplied kernel:<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">4.9.0-8-amd64</span><br></pre></td></tr></table></figure></p>
 <p>  To install an upstream kernel on a linode:</p>
   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt-get install linux-image-amd64 grub2</span><br></pre></td></tr></table></figure>
+
 <p>  Open /etc/default/grub and modify these variables to match:<br>  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX=&quot;crashkernel=auto rhgb console=ttyS0,19200n8 net.ifnames=0&quot;</span><br><span class="line">GRUB_TERMINAL=serial</span><br><span class="line">GRUB_DISABLE_OS_PROBER=true</span><br><span class="line">GRUB_SERIAL_COMMAND=&quot;serial --speed=19200 --unit=0 --word=8 --parity=no --stop=1&quot;</span><br><span class="line">GRUB_DISABLE_LINUX_UUID=true</span><br><span class="line">GRUB_GFXPAYLOAD_LINUX=text</span><br></pre></td></tr></table></figure></p>
 <p>  Then update:<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">update-grub</span><br></pre></td></tr></table></figure></p>
 <p>  Shutdown the linode and set Configuration Profile &gt; Boot Settings &gt; Kernel to GRUB2<br>  Reboot and check kernel again<br>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure></p>
 <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hostnamectl <span class="built_in">set</span>-hostname WGuard</span><br><span class="line">sudo -i</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb http://deb.debian.org/debian/ unstable main"</span> &gt; /etc/apt/sources.list.d/unstable.list</span><br><span class="line"><span class="built_in">printf</span> <span class="string">'Package: *\nPin: release a=unstable\nPin-Priority: 90\n'</span> &gt; /etc/apt/preferences.d/<span class="built_in">limit</span>-unstable</span><br><span class="line">apt update</span><br><span class="line">apt install wireguard -y</span><br></pre></td></tr></table></figure>
+
 <h5 id="Server-Setup"><a href="#Server-Setup" class="headerlink" title="Server Setup"></a>Server Setup</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">umask</span> 077</span><br><span class="line">wg genkey | tee privatekey | wg pubkey &gt; publickey</span><br><span class="line"><span class="comment"># Replace &lt;Private Key&gt; and &lt;Address&gt;</span></span><br><span class="line"><span class="built_in">printf</span> <span class="string">'[Interface]</span></span><br><span class="line"><span class="string">PrivateKey = &lt;Private Key&gt;</span></span><br><span class="line"><span class="string">Address = &lt;IPv4 Address&gt;, &lt;IPv6 Address&gt;</span></span><br><span class="line"><span class="string">ListenPort = 51820</span></span><br><span class="line"><span class="string">PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; ip6tables -A FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</span></span><br><span class="line"><span class="string">PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE; ip6tables -D FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -D POSTROUTING -o eth0 -j MASQUERADE</span></span><br><span class="line"><span class="string">SaveConfig = true'</span> &gt; /etc/wireguard/wg0.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># Open firewall</span></span><br><span class="line">sudo ufw allow 51820/udp</span><br><span class="line">sudo ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="Client-installation"><a href="#Client-installation" class="headerlink" title="Client installation"></a>Client installation</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo -i</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb http://deb.debian.org/debian/ unstable main"</span> &gt; /etc/apt/sources.list.d/unstable.list</span><br><span class="line"><span class="built_in">printf</span> <span class="string">'Package: *\nPin: release a=unstable\nPin-Priority: 90\n'</span> &gt; /etc/apt/preferences.d/<span class="built_in">limit</span>-unstable</span><br><span class="line">apt update</span><br><span class="line">apt install wireguard</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"alias wgup='wg-quick up wg0'"</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"alias wgdown='wg-quick down wg0'"</span> &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir wg &amp;&amp; <span class="built_in">cd</span> wg</span><br><span class="line"><span class="built_in">umask</span> 077</span><br><span class="line">wg genkey | tee privatekey | wg pubkey &gt; publickey</span><br><span class="line"><span class="built_in">printf</span> <span class="string">"[Interface]</span></span><br><span class="line"><span class="string">PrivateKey = &lt;private key&gt;</span></span><br><span class="line"><span class="string">Address = 192.168.3.2</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Peer]</span></span><br><span class="line"><span class="string">PublicKey = &lt;Server Public key&gt;</span></span><br><span class="line"><span class="string">Endpoint = &lt;Server Public IP&gt;:51820</span></span><br><span class="line"><span class="string">AllowedIPs = 0.0.0.0/0, ::/0</span></span><br><span class="line"><span class="string">"</span> &gt; /etc/wireguard/wg0.conf</span><br><span class="line"></span><br><span class="line">wg-quick up wg0</span><br><span class="line">systemctl <span class="built_in">enable</span> wg-quick@wg0</span><br><span class="line"></span><br><span class="line"><span class="comment"># confirm</span></span><br><span class="line">wg</span><br><span class="line"></span><br><span class="line"><span class="comment"># interface: wg0</span></span><br><span class="line"><span class="comment">#  public key: &lt;Client Public Key&gt;</span></span><br><span class="line"><span class="comment">#  private key: (hidden)</span></span><br><span class="line"><span class="comment">#  listening port: 46052</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># peer: &lt;Server Public Key&gt;</span></span><br><span class="line"><span class="comment">#  endpoint: 234.121.12.42:51820</span></span><br><span class="line"><span class="comment">#  allowed ips: 0.0.0.0/0, ::/0</span></span><br><span class="line"><span class="comment"># latest handshake: 1 minute, 35 seconds ago</span></span><br><span class="line"><span class="comment"># transfer: 15.56 MiB received, 676.48 KiB sent</span></span><br><span class="line"><span class="comment"># persistent keepalive: every 25 seconds</span></span><br><span class="line"></span><br><span class="line">wg-quick save wg0</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -587,7 +593,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -622,11 +628,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -733,7 +735,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

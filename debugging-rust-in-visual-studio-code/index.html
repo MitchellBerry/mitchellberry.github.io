@@ -136,7 +136,7 @@
 <meta property="og:site_name" content="Cybernated">
 <meta property="og:description" content="VSCode should detect rust and offer to create a launch.json template. From there it needs a few tweaks.  For a binary the launch.json configuration file simply needs to be pointed towards the build fo">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-04T06:40:47.881Z">
+<meta property="og:updated_time" content="2019-06-09T10:44:15.465Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Debugging Rust in Visual Studio Code">
 <meta name="twitter:description" content="VSCode should detect rust and offer to create a launch.json template. From there it needs a few tweaks.  For a binary the launch.json configuration file simply needs to be pointed towards the build fo">
@@ -453,14 +453,25 @@
 
       
         <p>VSCode should detect rust and offer to create a launch.json template. From there it needs a few tweaks. </p>
-<p>For a binary the launch.json configuration file simply needs to be pointed towards the build folder which should be target/debug/<your binary="">. Example:<br><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"program": "$&#123;workspaceFolder&#125;/target/debug/my_binary"</span><br></pre></td></tr></table></figure></your></p>
+<p>For a binary the launch.json configuration file simply needs to be pointed towards the build folder which should be target/debug/<your binary="">. Example:</your></p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">"program": "$&#123;workspaceFolder&#125;/target/debug/my_binary"</span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
-<p>For debugging libraries or binary tests/benchmarks it’s a bit more complicated, first requiring a temporary test build, so run <code>cargo test</code> initially. This will build into the same debug folder but the filename will have a hash appended indicating it’s a for running tests. You’ll need to copy that filename into launch.json.  Example:<br><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"program": "$&#123;workspaceFolder&#125;/target/debug/my_binary-9734ad86acd71825"</span><br></pre></td></tr></table></figure></p>
+
+<p>For debugging libraries or binary tests/benchmarks it’s a bit more complicated, first requiring a temporary test build, so run <code>cargo test</code> initially. This will build into the same debug folder but the filename will have a hash appended indicating it’s a for running tests. You’ll need to copy that filename into launch.json.  Example: </p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">"program": "$&#123;workspaceFolder&#125;/target/debug/my_binary-9734ad86acd71825"</span><br></pre></td></tr></table></figure>
+
 <p>Upon cleaning and recompiling this hash can change requiring the path to be updated periodically. </p>
-<p>Finally it needs a new parameter - cargo. Also included are extra arguments, <code>-- --nocapture</code> which prints stdout to the console, sometimes useful. You’ll notice running the tests internally in vscode by clicking run tests has this option selected by default<br><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"cargo": &#123;</span><br><span class="line">    "args": ["test", "--" , "--nocapture"]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>To debug benchmarks the arguments simply need to be changed:<br><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"cargo": &#123;</span><br><span class="line">    "args": ["bench"]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Finally it needs a new parameter - cargo. Also included are extra arguments, <code>-- --nocapture</code> which prints stdout to the console, sometimes useful. You’ll notice running the tests internally in vscode by clicking run tests has this option selected by default</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">"cargo": &#123;</span><br><span class="line">    "args": ["test", "--" , "--nocapture"]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>To debug benchmarks the arguments simply need to be changed:</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">"cargo": &#123;</span><br><span class="line">    "args": ["bench"]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>Multiple test configurations can be listed and then selected via VSCode’s command menu. </p>
-<p>A full example of a typical launch.json setup:<br><figure class="highlight"><table><tr><td class="code"><pre><span class="line">    "version": "0.2.0",</span><br><span class="line">"configurations": [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"lldb"</span>,</span><br><span class="line">        <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Debug Tests"</span>,</span><br><span class="line">        <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/target/debug/my_binary-9734ad86acd71825"</span>,</span><br><span class="line">        <span class="attr">"cargo"</span>: &#123;<span class="attr">"args"</span>: [<span class="string">"test"</span>, <span class="string">"--"</span> , <span class="string">"--nocapture"</span>]&#125;,</span><br><span class="line">        <span class="attr">"cwd"</span>: <span class="string">"$&#123;workspaceFolder&#125;"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"lldb"</span>,</span><br><span class="line">        <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Debug Benches"</span>,</span><br><span class="line">        <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/target/debug/my_binary-9734ad86acd71825"</span>,</span><br><span class="line">        <span class="attr">"cargo"</span>: &#123;<span class="attr">"args"</span>: [<span class="string">"bench"</span>]&#125;,</span><br><span class="line">        <span class="attr">"cwd"</span>: <span class="string">"$&#123;workspaceFolder&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>A full example of a typical launch.json setup: </p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">    "version": "0.2.0",</span><br><span class="line">"configurations": [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"lldb"</span>,</span><br><span class="line">        <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Debug Tests"</span>,</span><br><span class="line">        <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/target/debug/my_binary-9734ad86acd71825"</span>,</span><br><span class="line">        <span class="attr">"cargo"</span>: &#123;<span class="attr">"args"</span>: [<span class="string">"test"</span>, <span class="string">"--"</span> , <span class="string">"--nocapture"</span>]&#125;,</span><br><span class="line">        <span class="attr">"cwd"</span>: <span class="string">"$&#123;workspaceFolder&#125;"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"lldb"</span>,</span><br><span class="line">        <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"Debug Benches"</span>,</span><br><span class="line">        <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/target/debug/my_binary-9734ad86acd71825"</span>,</span><br><span class="line">        <span class="attr">"cargo"</span>: &#123;<span class="attr">"args"</span>: [<span class="string">"bench"</span>]&#125;,</span><br><span class="line">        <span class="attr">"cwd"</span>: <span class="string">"$&#123;workspaceFolder&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -573,7 +584,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -608,11 +619,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -719,7 +726,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

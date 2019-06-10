@@ -455,31 +455,59 @@
         <p>Netinst for Debian Stretch needs a little massaging sometimes. This a franken-collection of configurations not intended to be all used at once.</p>
 <a id="more"></a>
 <h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install tmux curl git</span><br></pre></td></tr></table></figure>
+
 <h3 id="Add-user"><a href="#Add-user" class="headerlink" title="Add user"></a>Add user</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Setup non-root user</span></span><br><span class="line">apt install sudo &amp;&amp; </span><br><span class="line">adduser cleaner &amp;&amp;</span><br><span class="line">usermod -aG sudo cleaner &amp;&amp;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'cleaner ALL=(ALL) ALL'</span> &gt;&gt; /etc/sudoers</span><br></pre></td></tr></table></figure>
+
 <h3 id="Server-Security"><a href="#Server-Security" class="headerlink" title="Server Security"></a>Server Security</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install fail2ban unattended-upgrades &amp;&amp;</span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">"APT::Periodic::Update-Package-Lists \"1\";\nAPT::Periodic::Unattended-Upgrade \"1\";\n"</span> &gt; /etc/apt/apt.conf.d/20auto-upgrades</span><br><span class="line"><span class="comment"># Alternatively 'dpkg-configure unattended-upgrades' and go through the graphical menu</span></span><br></pre></td></tr></table></figure>
-<h4 id="SSH-Hardening"><a href="#SSH-Hardening" class="headerlink" title="SSH Hardening"></a>SSH Hardening</h4><p>Add key:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">read</span> -p <span class="string">'Paste in public ssh key (no newlines!): '</span> ssh_key</span><br></pre></td></tr></table></figure></p>
+
+<h4 id="SSH-Hardening"><a href="#SSH-Hardening" class="headerlink" title="SSH Hardening"></a>SSH Hardening</h4><p>Add key:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">read</span> -p <span class="string">'Paste in public ssh key (no newlines!): '</span> ssh_key</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir /home/cleaner/.ssh &amp;&amp;</span><br><span class="line">chmod 700 /home/cleaner/.ssh &amp;&amp;</span><br><span class="line"><span class="built_in">echo</span>  <span class="variable">$ssh_key</span> &gt; /home/cleaner/.ssh/authorized_keys &amp;&amp;</span><br><span class="line">chmod 600 /home/cleaner/.ssh/authorized_keys &amp;&amp;</span><br><span class="line">chown cleaner:cleaner -R /home/cleaner/.ssh/ &amp;&amp;</span><br><span class="line"><span class="built_in">unset</span> ssh_key</span><br></pre></td></tr></table></figure>
-<p>Modify sshd_config:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">'s/#Port 22/Port 12222'</span> /etc/ssh/sshd_config;</span><br><span class="line">sed -i <span class="string">'/PubkeyAuthentication/c\PubkeyAuthentication yes'</span> /etc/ssh/sshd_config;</span><br><span class="line">sed -i <span class="string">'s/#PasswordAuthentication yes/PasswordAuthentication no/'</span> /etc/ssh/sshd_config;</span><br><span class="line">sed -i <span class="string">'/AuthorizedKeysFile/c\AuthorizedKeysFile %h/.ssh/authorized_keys'</span> /etc/ssh/sshd_config;</span><br></pre></td></tr></table></figure></p>
-<p>Restart sshd:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service ssh restart</span><br></pre></td></tr></table></figure></p>
+
+<p>Modify sshd_config:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">'s/#Port 22/Port 12222'</span> /etc/ssh/sshd_config;</span><br><span class="line">sed -i <span class="string">'/PubkeyAuthentication/c\PubkeyAuthentication yes'</span> /etc/ssh/sshd_config;</span><br><span class="line">sed -i <span class="string">'s/#PasswordAuthentication yes/PasswordAuthentication no/'</span> /etc/ssh/sshd_config;</span><br><span class="line">sed -i <span class="string">'/AuthorizedKeysFile/c\AuthorizedKeysFile %h/.ssh/authorized_keys'</span> /etc/ssh/sshd_config;</span><br></pre></td></tr></table></figure>
+
+<p>Restart sshd:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service ssh restart</span><br></pre></td></tr></table></figure>
+
 <h4 id="Iptables"><a href="#Iptables" class="headerlink" title="Iptables"></a>Iptables</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Allow ssh port</span></span><br><span class="line">iptables -I INPUT -p tcp -s 0.0.0.0/0 --dport 12222 -j ACCEPT;</span><br><span class="line">iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT;</span><br><span class="line">ip6tables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT</span><br><span class="line">iptables -P INPUT DROP;</span><br><span class="line">iptables -P FORWARD DROP;</span><br><span class="line">ip6tables -P INPUT DROP;</span><br><span class="line">ip6tables -P FORWARD DROP;</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">### Use contrib and non-free repositories</span><br><span class="line">```bash</span><br><span class="line">sudo sed -i &apos;s/main/main contrib non-free/g&apos; /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
 <h3 id="Install-Nvidia-GPU-driver"><a href="#Install-Nvidia-GPU-driver" class="headerlink" title="Install Nvidia GPU driver"></a>Install Nvidia GPU driver</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Use contrib and non-free sources as above</span></span><br><span class="line">apt update</span><br><span class="line">apt install -y linux-headers-$(uname -r|sed <span class="string">'s/[^-]*-[^-]*-//'</span>) nvidia-driver</span><br><span class="line"><span class="comment"># Restart required</span></span><br><span class="line"><span class="comment"># Verify</span></span><br><span class="line">lspci | grep -i nvidia</span><br></pre></td></tr></table></figure>
+
 <h3 id="Apt-over-https-or-tor"><a href="#Apt-over-https-or-tor" class="headerlink" title="Apt over https or tor"></a>Apt over https or tor</h3><p>Simply modifying sources.list to https may work depending on your mirrors, though cert failures are likely.<br>Use the default below as a remedy.</p>
 <h5 id="Https"><a href="#Https" class="headerlink" title="Https"></a>Https</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install apt-transport-https;</span><br><span class="line">apt update; <span class="comment"># get certs before modifying sources.list</span></span><br></pre></td></tr></table></figure>
+
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># String replace (only works for certain mirrors)</span></span><br><span class="line">sed -i <span class="string">'s/http/https/g'</span> /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
 <p>If security.debian.org is failing:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sed -i <span class="string">'s/security/deb/g'</span> /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
 <h5 id="Tor"><a href="#Tor" class="headerlink" title="Tor"></a>Tor</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install apt-transport-tor</span><br></pre></td></tr></table></figure>
+
 <h5 id="Default-https-sources-list"><a href="#Default-https-sources-list" class="headerlink" title="Default https sources.list"></a>Default https sources.list</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deb https://deb.debian.org/debian stretch main</span><br><span class="line">deb-src https://deb.debian.org/debian stretch main</span><br><span class="line"></span><br><span class="line">deb https://deb.debian.org/debian-security/ stretch/updates main</span><br><span class="line">deb-src https://deb.debian.org/debian-security/ stretch/updates main</span><br><span class="line"></span><br><span class="line">deb https://deb.debian.org/debian stretch-updates main</span><br><span class="line">deb-src https://deb.debian.org/debian stretch-updates main</span><br></pre></td></tr></table></figure>
+
 <h5 id="Default-tor-sources-list"><a href="#Default-tor-sources-list" class="headerlink" title="Default tor sources.list"></a>Default tor sources.list</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deb tor+http://vwakviie2ienjx6t.onion/debian stretch main</span><br><span class="line">deb-src tor+http://vwakviie2ienjx6t.onion/debian stretch main</span><br><span class="line"></span><br><span class="line">deb tor+http://sgvtcaew4bxjd7ln.onion/debian-security stretch/updates main</span><br><span class="line">deb-src tor+http://sgvtcaew4bxjd7ln.onion/debian-security stretch/updates main</span><br><span class="line"></span><br><span class="line">deb tor+http://vwakviie2ienjx6t.onion/debian stretch-updates main</span><br><span class="line">deb-src tor+http://vwakviie2ienjx6t.onion/debian stretch-updates main</span><br></pre></td></tr></table></figure>
+
 <h3 id="Python-things"><a href="#Python-things" class="headerlink" title="Python things"></a>Python things</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># the pips</span></span><br><span class="line">apt install python-pip python3-pip</span><br><span class="line"></span><br><span class="line"><span class="comment"># tensorflow v2 alpha (likely to change soon)</span></span><br><span class="line">pip3 install tensorflow==2.0.0-alpha0 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># pillow</span></span><br><span class="line">pip3 install Pillow</span><br><span class="line"></span><br><span class="line"><span class="comment"># Numpy / Scipy </span></span><br><span class="line">pip3 install numpy scipy </span><br><span class="line"></span><br><span class="line"><span class="comment"># Sympy (large!)</span></span><br><span class="line">pip3 install sympy</span><br></pre></td></tr></table></figure>
+
 <h5 id="Install-Python-3-6-and-up"><a href="#Install-Python-3-6-and-up" class="headerlink" title="Install Python 3.6 and up"></a>Install Python 3.6 and up</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install libffi libssl-dev &amp;&amp;</span><br><span class="line">wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz &amp;&amp;</span><br><span class="line">tar xf Python-3.7.3.tar.xz &amp;&amp;</span><br><span class="line"><span class="built_in">cd</span> Python-3.7.3.tar.xz &amp;&amp;</span><br><span class="line">./configure --<span class="built_in">enable</span>-optimizations &amp;&amp; </span><br><span class="line">make &amp;&amp;</span><br><span class="line">make <span class="built_in">test</span> &amp;&amp;</span><br><span class="line">sudo make install &amp;&amp;</span><br><span class="line">python3 -V</span><br></pre></td></tr></table></figure>
+
 <h5 id="Removing-python2"><a href="#Removing-python2" class="headerlink" title="Removing python2"></a>Removing python2</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># shows what uses python2 as a dependency</span></span><br><span class="line">apt -s remove python-minimal</span><br><span class="line"><span class="comment"># other potential breakages</span></span><br><span class="line">grep bin/python$ /usr/bin/*</span><br></pre></td></tr></table></figure>
+
 <h3 id="Tiling-Window-Managers"><a href="#Tiling-Window-Managers" class="headerlink" title="Tiling Window Managers"></a>Tiling Window Managers</h3><h5 id="dwm"><a href="#dwm" class="headerlink" title="dwm"></a>dwm</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">install dwm suckless-tools lightdm xorg</span><br></pre></td></tr></table></figure>
+
 <h5 id="i3"><a href="#i3" class="headerlink" title="i3"></a>i3</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install xorg lightdm i3status suckless-tools i3-wm</span><br><span class="line"><span class="comment"># alternatively: i3-gaps</span></span><br></pre></td></tr></table></figure>
+
 <h5 id="Changing-resolution"><a href="#Changing-resolution" class="headerlink" title="Changing resolution"></a>Changing resolution</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># check available resolutions</span></span><br><span class="line">xrandr -q</span><br><span class="line"></span><br><span class="line"><span class="comment"># modify resolution</span></span><br><span class="line">xrandr -s 1280x800</span><br></pre></td></tr></table></figure>
+
 <h3 id="Set-default-Terminal"><a href="#Set-default-Terminal" class="headerlink" title="Set default Terminal"></a>Set default Terminal</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">update-alternatives --config x-terminal-emulator</span><br></pre></td></tr></table></figure>
-<h3 id="Cmake-installation"><a href="#Cmake-installation" class="headerlink" title="Cmake installation"></a>Cmake installation</h3><p>Latest source code here:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3.tar.gz;</span><br><span class="line">tar xvfz cmake-3.14.3.tar.gz;</span><br><span class="line">rm cmake-3.14.3.tar.gz;</span><br><span class="line"><span class="built_in">cd</span> cmake-3.14.3;</span><br><span class="line">./configure;</span><br><span class="line">make;</span><br><span class="line">sudo make install;</span><br></pre></td></tr></table></figure></p>
+
+<h3 id="Cmake-installation"><a href="#Cmake-installation" class="headerlink" title="Cmake installation"></a>Cmake installation</h3><p>Latest source code here: </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3.tar.gz;</span><br><span class="line">tar xvfz cmake-3.14.3.tar.gz;</span><br><span class="line">rm cmake-3.14.3.tar.gz;</span><br><span class="line"><span class="built_in">cd</span> cmake-3.14.3;</span><br><span class="line">./configure;</span><br><span class="line">make;</span><br><span class="line">sudo make install;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -599,7 +627,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -634,11 +662,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -745,7 +769,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

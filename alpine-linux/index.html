@@ -136,7 +136,7 @@
 <meta property="og:site_name" content="Cybernated">
 <meta property="og:description" content="The ever useful Alpine linux.  Based on musl and BusyBox. It uses a hardened kernel and compiles all user space binaries as position-independent executables with stack-smashing protection. A quick run">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-07T10:57:41.809Z">
+<meta property="og:updated_time" content="2019-05-07T11:26:53.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Alpine Linux">
 <meta name="twitter:description" content="The ever useful Alpine linux.  Based on musl and BusyBox. It uses a hardened kernel and compiles all user space binaries as position-independent executables with stack-smashing protection. A quick run">
@@ -417,7 +417,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/alpine/" itemprop="url" rel="index"><span itemprop="name">Alpine</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/containers/" itemprop="url" rel="index"><span itemprop="name">Containers</span></a></span>
 
                 
                 
@@ -454,11 +454,19 @@
       
         <p>The ever useful Alpine linux.  Based on musl and BusyBox. It uses a hardened kernel and compiles all user space binaries as position-independent executables with stack-smashing protection. A quick rundown.</p>
 <a id="more"></a>
+
 <h3 id="Setup-fresh-install"><a href="#Setup-fresh-install" class="headerlink" title="Setup fresh install"></a>Setup fresh install</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">setup-alpine</span><br></pre></td></tr></table></figure>
+
 <h3 id="As-a-linux-container"><a href="#As-a-linux-container" class="headerlink" title="As a linux container"></a>As a linux container</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lxc-create -t alpine -n foo -- -r edge</span><br></pre></td></tr></table></figure>
-<h3 id="Package-Management"><a href="#Package-Management" class="headerlink" title="Package Management"></a>Package Management</h3><p>General commands<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apk update</span><br><span class="line"></span><br><span class="line">apk add murmur</span><br><span class="line"></span><br><span class="line">apk del murmur</span><br></pre></td></tr></table></figure></p>
-<h3 id="Init-system"><a href="#Init-system" class="headerlink" title="Init system"></a>Init system</h3><p>Start service on boot<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rc-update add nginx default</span><br></pre></td></tr></table></figure></p>
+
+<h3 id="Package-Management"><a href="#Package-Management" class="headerlink" title="Package Management"></a>Package Management</h3><p>General commands</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apk update</span><br><span class="line"></span><br><span class="line">apk add murmur</span><br><span class="line"></span><br><span class="line">apk del murmur</span><br></pre></td></tr></table></figure>
+
+<h3 id="Init-system"><a href="#Init-system" class="headerlink" title="Init system"></a>Init system</h3><p>Start service on boot</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rc-update add nginx default</span><br></pre></td></tr></table></figure>
+
 <h3 id="Adding-community-repository"><a href="#Adding-community-repository" class="headerlink" title="Adding community repository"></a>Adding community repository</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'http://dl-cdn.alpinelinux.org/alpine/edge/community'</span> &gt;&gt; /etc/apk/repositories</span><br></pre></td></tr></table></figure>
+
 <h3 id="Tutorials"><a href="#Tutorials" class="headerlink" title="Tutorials"></a>Tutorials</h3><p><a href="https://wiki.alpinelinux.org/wiki/Tutorials_and_Howtos" target="_blank" rel="noopener">https://wiki.alpinelinux.org/wiki/Tutorials_and_Howtos</a></p>
 <h3 id="Packages"><a href="#Packages" class="headerlink" title="Packages"></a>Packages</h3><p><a href="https://pkgs.alpinelinux.org/packages" target="_blank" rel="noopener">https://pkgs.alpinelinux.org/packages</a></p>
 
@@ -582,7 +590,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -617,11 +625,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -728,7 +732,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

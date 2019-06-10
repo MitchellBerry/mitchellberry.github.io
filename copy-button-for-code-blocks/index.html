@@ -457,12 +457,16 @@
         <p>There’s a few frameworks out there like clipboard.js and code-box-copy but after some messing around a simpler solution seems to be a little bit of jQuery.</p>
 <p>To use a clipboard image or for different text modify the clippy element. Note that jQuery doesn’t <em>officially</em> support SVG images but had no problem embedding one here. The copied text box reverts after 5 seconds using a promise to sleep.</p>
 <a id="more"></a>
+
 <p>As an after-footer script (or anywhere after loading jQuery):</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> clippy = <span class="string">"Copy"</span>;</span><br><span class="line">$(<span class="string">'.highlight'</span>).prepend($(<span class="string">'&lt;button&gt;'</span>).addClass(<span class="string">'copy-btn'</span>)</span><br><span class="line">    .append(clippy).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e);</span><br><span class="line">    <span class="keyword">var</span> code = $(e.target).parent().find(<span class="string">'.code'</span>).find(<span class="string">'.line'</span>).map(<span class="function"><span class="keyword">function</span>(<span class="params">i, e</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $(e).text()</span><br><span class="line">    &#125;).toArray().join(<span class="string">'\n'</span>)</span><br><span class="line">    e.currentTarget.textContent = <span class="string">'Copied!'</span>;</span><br><span class="line">    revertButton(e, <span class="number">5000</span>);</span><br><span class="line">    <span class="keyword">var</span> ta = <span class="built_in">document</span>.createElement(<span class="string">'textarea'</span>)</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(ta)</span><br><span class="line">    ta.style.position = <span class="string">'fixed'</span></span><br><span class="line">    ta.style.top = <span class="number">0</span></span><br><span class="line">    ta.style.left = <span class="number">0</span></span><br><span class="line">    ta.value = code</span><br><span class="line">    ta.select()</span><br><span class="line">    ta.focus()</span><br><span class="line">    <span class="built_in">document</span>.execCommand(<span class="string">'copy'</span>)</span><br><span class="line">    <span class="built_in">document</span>.body.removeChild(ta)</span><br><span class="line"></span><br><span class="line">&#125;))</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sleep</span>(<span class="params">ms</span>) </span>&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> setTimeout(resolve, ms));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">revertButton</span>(<span class="params">e, time</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">await</span> sleep(time);</span><br><span class="line">    e.currentTarget.textContent = <span class="string">'Copy'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>Bop it! Twist it! Style it:</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.copy-btn</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">display</span>: inline-block;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">13px</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: <span class="number">700</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">    <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">    <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#eee</span>;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(#fcfcfc, #eee);</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#d5d5d5</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">    <span class="attribute">user-select</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span> <span class="selector-class">.copy-btn</span> &#123;</span><br><span class="line">    <span class="attribute">transition</span>: opacity .<span class="number">3s</span> ease-in-out;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">2px</span> <span class="number">6px</span>;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">4px</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">6px</span>;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.copy-btn</span>,</span><br><span class="line"><span class="selector-class">.highlight</span> <span class="selector-class">.copy-btn</span><span class="selector-pseudo">:focus</span> &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>To use a clipboard icon instead:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> clippy = <span class="string">'&lt;img src="images/clippy.svg" width=13&gt;&lt;/img&gt;'</span>;</span><br></pre></td></tr></table></figure>
+
 <h5 id="Example-SVG-Icon-MIT-license"><a href="#Example-SVG-Icon-MIT-license" class="headerlink" title="Example SVG Icon (MIT license)"></a>Example SVG Icon (MIT license)</h5><p><img src="/images/clippy.svg" alt="clipboard icon" title="Clippy" width="50" height="50" align="left"></p>
 
       
@@ -581,7 +585,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -616,11 +620,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -727,7 +727,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

@@ -356,6 +356,312 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="mitchellberry.github.io/hash-sum-mismatch/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mitchell Berry">
+      <meta itemprop="description" content="An assortment of digital tidbits.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cybernated">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/hash-sum-mismatch/" class="post-title-link" itemprop="url">Hash Sum Mismatch</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: June-2019 12:37:49" itemprop="dateCreated datePublished" datetime="2019-06-10T12:37:49+10:00">June-2019</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="The-Problem"><a href="#The-Problem" class="headerlink" title="The Problem"></a>The Problem</h3><p>Trying to download through apt can sometimes raise a fatal error due to mismatched file hashes</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Hash Sum mismatch</span><br><span class="line">   Hashes of expected file:</span><br><span class="line">    - SHA256:f1b9878cad0300cd70aa43ed288329d6e8dfb01b7b0041dc39dfcc9ab77a9f1f</span><br><span class="line">    - SHA1:da28f681d339856f2fb6a212069cb30f5e5286ed [weak]</span><br><span class="line">    - MD5Sum:5e3b912e1c1120daf9525ced59aef373 [weak]</span><br><span class="line">    - Filesize:13019402 [weak]</span><br><span class="line">   Hashes of received file:</span><br><span class="line">    - SHA256:bae5b920f710282bba743198a02b22518b7119bcd0f079c1a89ce4e761b87cdd</span><br><span class="line">    - SHA1:c03e154de4b17388f5a02ab6e9f8c8ffc89d16af [weak]</span><br><span class="line">    - MD5Sum:ab963ae52190b0316b83bbdb5454d542 [weak]</span><br><span class="line">    - Filesize:13019402 [weak]</span><br></pre></td></tr></table></figure>
+
+<h3 id="The-Reason"><a href="#The-Reason" class="headerlink" title="The Reason"></a>The Reason</h3><p>Often he race condition that arises with fetching apt packages. <a href="https://blog.packagecloud.io/eng/2016/09/27/fixing-apt-hash-sum-mismatch-consistent-apt-repositories/" target="_blank" rel="noopener">Further details</a></p>
+<p>Also some apt repositories use LZMA (.xz) compressed metadata. apt before version 1.0 fails to decompressed LZMA archives correctly (sometimes) giving the hash sum mismatch error.</p>
+<h3 id="The-solution"><a href="#The-solution" class="headerlink" title="The solution"></a>The solution</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">printf &quot;Acquire::http::Pipeline-Depth 0;</span><br><span class="line">Acquire::http::No-Cache true;</span><br><span class="line">Acquire::BrokenProxy    true;&quot; &gt;&gt; /etc/apt/apt.conf.d/99fixbadproxy;</span><br><span class="line"></span><br><span class="line">apt-get clean &amp;&amp;</span><br><span class="line">rm -rf /var/lib/apt/lists/* &amp;&amp;</span><br><span class="line">apt-get clean;</span><br><span class="line">apt-get update;</span><br><span class="line">apt-get upgrade;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="mitchellberry.github.io/converting-a-bash-script-to-ansible/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mitchell Berry">
+      <meta itemprop="description" content="An assortment of digital tidbits.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cybernated">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/converting-a-bash-script-to-ansible/" class="post-title-link" itemprop="url">Converting a Bash Script to Ansible</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: May-2019 14:15:00" itemprop="dateCreated datePublished" datetime="2019-05-24T14:15:00+10:00">May-2019</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Installing-Ansible"><a href="#Installing-Ansible" class="headerlink" title="Installing Ansible"></a>Installing Ansible</h3><p>Below is for Debian, see the <a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html" target="_blank" rel="noopener">docs</a> for other distributions.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main"</span> &gt;&gt; /etc/apt/sources.list &amp;&amp;</span><br><span class="line">apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367 &amp;&amp;</span><br><span class="line">apt update &amp;&amp;</span><br><span class="line">apt install ansible</span><br></pre></td></tr></table></figure>
+
+<h3 id="Setting-up"><a href="#Setting-up" class="headerlink" title="Setting up"></a>Setting up</h3><p>Create and push ssh keys to servers.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_ed25519 &lt;user@host&gt;</span><br><span class="line">ssh-agent bash</span><br><span class="line">ssh-add ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure>
+
+<p>Edit <code>/etc/ansible/hosts</code>:</p>
+<pre><code></code></pre>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="mitchellberry.github.io/factom-testnet-auth-node-setup/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -455,7 +761,7 @@
 
       
         
-          <p>Full guide starting from scratch on a fresh OS to join the Factom Testnet Authority Set.</p>
+          <p>Full guide starting from scratch on a fresh OS to join the Factom Testnet Authority Set. This has been condensed down into a set of bash scripts.   </p>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -896,6 +1202,24 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1579,337 +1903,11 @@
 
       
         
-          <p>Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But it’s default config out of the box leaves a lot to be desired.</p>
+          <p>Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But its default config out of the box leaves a lot to be desired.</p>
           <!--noindex-->
           
             <div class="post-button text-center">
               <a class="btn" href="/tmux-configuration/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="mitchellberry.github.io/fuzzing-with-rust/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mitchell Berry">
-      <meta itemprop="description" content="An assortment of digital tidbits.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/fuzzing-with-rust/" class="post-title-link" itemprop="url">Fuzzing With Rust</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: October-2018 09:41:38" itemprop="dateCreated datePublished" datetime="2018-10-14T09:41:38+11:00">October-2018</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>A guide to fuzzing the rust api client for Factom.</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/fuzzing-with-rust/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="mitchellberry.github.io/neat-links/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mitchell Berry">
-      <meta itemprop="description" content="An assortment of digital tidbits.">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cybernated">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/neat-links/" class="post-title-link" itemprop="url">Neat Links</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: October-2018 08:53:02" itemprop="dateCreated datePublished" datetime="2018-10-14T08:53:02+11:00">October-2018</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Some links I like. Work in progress.</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/neat-links/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -2000,7 +1998,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2035,11 +2033,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -2146,7 +2140,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

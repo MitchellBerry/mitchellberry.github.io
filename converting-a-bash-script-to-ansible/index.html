@@ -128,18 +128,18 @@
 
 
 
-  <meta name="description" content="Contents Urxvt Youtube-dl Docker / Uninstall Midnight Commander - terminal file manager Remove Apache Redshift Cmus Zsh">
-<meta name="keywords" content="Debian,Software">
+  <meta name="description" content="Installing AnsibleBelow is for Debian, see the docs for other distributions. echo &quot;deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main&quot; &amp;gt;&amp;gt; /etc/apt/sources.list &amp;amp;&amp;amp;apt-key adv">
+<meta name="keywords" content="Linux, CD, Ansible">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Nifty Debian Programs">
-<meta property="og:url" content="mitchellberry.github.io/nifty-debian-programs/index.html">
+<meta property="og:title" content="Converting a Bash Script to Ansible">
+<meta property="og:url" content="mitchellberry.github.io/converting-a-bash-script-to-ansible/index.html">
 <meta property="og:site_name" content="Cybernated">
-<meta property="og:description" content="Contents Urxvt Youtube-dl Docker / Uninstall Midnight Commander - terminal file manager Remove Apache Redshift Cmus Zsh">
+<meta property="og:description" content="Installing AnsibleBelow is for Debian, see the docs for other distributions. echo &quot;deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main&quot; &amp;gt;&amp;gt; /etc/apt/sources.list &amp;amp;&amp;amp;apt-key adv">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-04T07:10:19.017Z">
+<meta property="og:updated_time" content="2019-06-09T10:44:52.977Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nifty Debian Programs">
-<meta name="twitter:description" content="Contents Urxvt Youtube-dl Docker / Uninstall Midnight Commander - terminal file manager Remove Apache Redshift Cmus Zsh">
+<meta name="twitter:title" content="Converting a Bash Script to Ansible">
+<meta name="twitter:description" content="Installing AnsibleBelow is for Debian, see the docs for other distributions. echo &quot;deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main&quot; &amp;gt;&amp;gt; /etc/apt/sources.list &amp;amp;&amp;amp;apt-key adv">
 
 
 
@@ -147,7 +147,7 @@
 
   
   
-  <link rel="canonical" href="mitchellberry.github.io/nifty-debian-programs/">
+  <link rel="canonical" href="mitchellberry.github.io/converting-a-bash-script-to-ansible/">
 
 
 
@@ -157,7 +157,7 @@
   };
 </script>
 
-  <title>Nifty Debian Programs | Cybernated</title>
+  <title>Converting a Bash Script to Ansible | Cybernated</title>
   
 
 
@@ -356,7 +356,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="mitchellberry.github.io/nifty-debian-programs/">
+    <link itemprop="mainEntityOfPage" href="mitchellberry.github.io/converting-a-bash-script-to-ansible/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mitchell Berry">
@@ -373,7 +373,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Nifty Debian Programs
+          <h1 class="post-title" itemprop="name headline">Converting a Bash Script to Ansible
 
               
             
@@ -399,30 +399,12 @@
                 
               
 
-              <time title="Created: April-2018 12:02:27" itemprop="dateCreated datePublished" datetime="2018-04-02T12:02:27+10:00">April-2018</time>
+              <time title="Created: May-2019 14:15:00" itemprop="dateCreated datePublished" datetime="2019-05-24T14:15:00+10:00">May-2019</time>
             
 
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -452,65 +434,14 @@
       
 
       
-        <h4 id="Contents"><a href="#Contents" class="headerlink" title="Contents"></a>Contents</h4><ul>
-<li><a href="#urxvt">Urxvt</a></li>
-<li><a href="#youtube-dl">Youtube-dl</a></li>
-<li><a href="#docker">Docker</a> / <a href="#uninstall-docker">Uninstall</a></li>
-<li><a href="#midnight-commander">Midnight Commander - terminal file manager</a></li>
-<li><a href="#remove-apache">Remove Apache</a></li>
-<li><a href="#redshift">Redshift</a></li>
-<li><a href="#cmus">Cmus</a></li>
-<li><a href="#zsh">Zsh</a></li>
-</ul>
-<a id="more"></a>
+        <h3 id="Installing-Ansible"><a href="#Installing-Ansible" class="headerlink" title="Installing Ansible"></a>Installing Ansible</h3><p>Below is for Debian, see the <a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html" target="_blank" rel="noopener">docs</a> for other distributions.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main"</span> &gt;&gt; /etc/apt/sources.list &amp;&amp;</span><br><span class="line">apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367 &amp;&amp;</span><br><span class="line">apt update &amp;&amp;</span><br><span class="line">apt install ansible</span><br></pre></td></tr></table></figure>
 
-<a name="urxvt">
-### Urxvt
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install rxvt-unicode</span><br></pre></td></tr></table></figure>
+<h3 id="Setting-up"><a href="#Setting-up" class="headerlink" title="Setting up"></a>Setting up</h3><p>Create and push ssh keys to servers.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t ed25519</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_ed25519 &lt;user@host&gt;</span><br><span class="line">ssh-agent bash</span><br><span class="line">ssh-add ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure>
 
-<a name="youtube-dl">
-### Youtube-dl
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/<span class="built_in">local</span>/bin/youtube-dl &amp;&amp;</span><br><span class="line">sudo chmod a+rx /usr/<span class="built_in">local</span>/bin/youtube-dl</span><br><span class="line"><span class="comment"># To extract audio</span></span><br><span class="line"><span class="comment"># apt install ffmpeg</span></span><br><span class="line"><span class="comment"># youtube-dl -x &lt;url for audio extraction&gt;</span></span><br></pre></td></tr></table></figure>
-
-<a name="docker">
-### Docker
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Dependencies</span></span><br><span class="line">apt install apt-transport-https ca-certificates curl gnupg-agentsoftware-properties-common;</span><br><span class="line"></span><br><span class="line"><span class="comment"># GPG Key</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Docker GPG Key: 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88"</span>;</span><br><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &amp;&amp;</span><br><span class="line">apt-key fingerprint 0EBFCD88;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add repository</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb [arch=amd64] https://download.docker.com/linux/debian <span class="variable">$(lsb_release -cs)</span> stable"</span> &gt; /etc/apt/sources.list.d/docker.list;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install</span></span><br><span class="line">apt update;</span><br><span class="line">apt install docker-ce docker-ce-cli;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Verify</span></span><br><span class="line">docker run --name hello-world-container hello-world;</span><br><span class="line">docker rm hello-world-container</span><br></pre></td></tr></table></figure>
-
-<a name="uninstall-docker">
-#### Uninstall Docker
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt purge docker-ce docker-ce-cli containerd.io &amp;&amp;</span><br><span class="line">apt autoremove &amp;&amp;</span><br><span class="line">rm -rf /var/lib/docker;</span><br><span class="line">rm -rf /etc/docker</span><br></pre></td></tr></table></figure>
-
-<a name="midnight-commander">
-### Midnight commander
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 0x836CC41976FB442E &amp;&amp;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb https://www.tataranovich.com/debian stretch main"</span> &gt;&gt; /etc/apt/source.list;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb-src https://www.tataranovich.com/debian stretch main"</span> &gt;&gt; /etc/apt/source.list;</span><br><span class="line">apt install mc</span><br></pre></td></tr></table></figure>
-
-<a name="remove-apache">
-### Remove Aapche
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo -i;</span><br><span class="line">service apache2 stop &amp;&amp;</span><br><span class="line">apt-get purge apache2 apache2-utils apache2.2-bin apache2-common &amp;&amp;</span><br><span class="line">whereis apache2</span><br></pre></td></tr></table></figure>
-
-<a name="redshift">
-### Redshift
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install redshift;</span><br><span class="line">sudo crontab -e </span><br><span class="line"><span class="comment"># run on startup</span></span><br><span class="line"><span class="comment"># @reboot redshift</span></span><br></pre></td></tr></table></figure>
-
-<a name="cmus">
-### Cmus
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install cmus</span><br></pre></td></tr></table></figure>
-
-<p>Usage:<br>H/L = Scan forward backwards<br>J/K or Up/Down buttons = Up/Down<br>:add ~/Music = add folder to tree<br>-/=     Volume up/down 10%<br>s = toggle shuffle<br>x = play<br>v = stop<br>z = previous track<br>c  = pause<br>b = next</p>
-<a name="zsh">
-### Zsh
-##### Installation
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install zsh -y &amp;&amp;</span><br><span class="line">chsh -s $(<span class="built_in">which</span> zsh)</span><br></pre></td></tr></table></figure>
-
-<h5 id="Oh-my-zsh"><a href="#Oh-my-zsh" class="headerlink" title="Oh-my-zsh"></a>Oh-my-zsh</h5><p>Piping directly into shell, pure evil.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install wget git -y;</span><br><span class="line">wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh;</span><br><span class="line"><span class="built_in">cd</span> ~/.oh-my-zsh/themes/;</span><br><span class="line">ls -a</span><br></pre></td></tr></table></figure>
-
-<p>Change Theme Function:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change theme, no argument prints all themes</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">zshtheme</span></span> ()&#123;</span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$#</span> -eq 0 ]</span><br><span class="line">        <span class="keyword">then</span></span><br><span class="line">            <span class="comment"># column command requires bsdmainutils</span></span><br><span class="line">            ls /root/.oh-my-zsh/themes/ | sed <span class="string">'s/.zsh-theme/ /'</span> | column</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            sed -i <span class="string">"0,/ZSH_THEME=.*/s/ZSH_THEME=.*/ZSH_THEME=<span class="variable">$1</span>/"</span> ~/.zshrc</span><br><span class="line">        <span class="built_in">exec</span> zsh</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="Same-config-root-and-user"><a href="#Same-config-root-and-user" class="headerlink" title="Same config root and user"></a>Same config root and user</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ln -s <span class="variable">$HOME</span>/.oh-my-zsh           /root/.oh-my-zsh;</span><br><span class="line">ln -s <span class="variable">$HOME</span>/.zshrc               /root/.zshrc;</span><br></pre></td></tr></table></figure>
-
-</a></a></a></a></a></a></a></a></a>
+<p>Edit <code>/etc/ansible/hosts</code>:</p>
+<pre><code></code></pre>
       
     </div>
 
@@ -533,9 +464,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/debian/" rel="tag"># Debian</a>
-          
-            <a href="/tags/software/" rel="tag"># Software</a>
+            <a href="/tags/linux-cd-ansible/" rel="tag"># Linux, CD, Ansible</a>
           
         </div>
       
@@ -548,8 +477,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/golang-debian-ubuntu-installation/" rel="next" title="Golang Debian/Ubuntu Installation">
-                <i class="fa fa-chevron-left"></i> Golang Debian/Ubuntu Installation
+              <a href="/factom-testnet-auth-node-setup/" rel="next" title="Factom Testnet Auth Node Setup">
+                <i class="fa fa-chevron-left"></i> Factom Testnet Auth Node Setup
               </a>
             
           </div>
@@ -558,8 +487,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/debugging-rust-in-visual-studio-code/" rel="prev" title="Debugging Rust in Visual Studio Code">
-                Debugging Rust in Visual Studio Code <i class="fa fa-chevron-right"></i>
+              <a href="/hash-sum-mismatch/" rel="prev" title="Hash Sum Mismatch">
+                Hash Sum Mismatch <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -811,7 +740,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Oh-my-zsh"><span class="nav-number">1.1.</span> <span class="nav-text">Oh-my-zsh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Same-config-root-and-user"><span class="nav-number">1.2.</span> <span class="nav-text">Same config root and user</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Installing-Ansible"><span class="nav-number">1.</span> <span class="nav-text">Installing Ansible</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting-up"><span class="nav-number">2.</span> <span class="nav-text">Setting up</span></a></li></ol></div>
             
 
           </div>

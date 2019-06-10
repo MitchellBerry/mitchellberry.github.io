@@ -128,18 +128,18 @@
 
 
 
-  <meta name="description" content="Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But it’s default config out of the box leaves a lot to be desired.">
+  <meta name="description" content="Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But its default config out of the box leaves a lot to be desired.">
 <meta name="keywords" content="Linux,Config,Tmux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tmux Configuration">
 <meta property="og:url" content="mitchellberry.github.io/tmux-configuration/index.html">
 <meta property="og:site_name" content="Cybernated">
-<meta property="og:description" content="Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But it’s default config out of the box leaves a lot to be desired.">
+<meta property="og:description" content="Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But its default config out of the box leaves a lot to be desired.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-07T11:16:36.292Z">
+<meta property="og:updated_time" content="2019-05-07T11:25:18.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tmux Configuration">
-<meta name="twitter:description" content="Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But it’s default config out of the box leaves a lot to be desired.">
+<meta name="twitter:description" content="Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But its default config out of the box leaves a lot to be desired.">
 
 
 
@@ -452,8 +452,9 @@
       
 
       
-        <p>Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But it’s default config out of the box leaves a lot to be desired.</p>
+        <p>Tmux is a wonderful tool for administering remote servers and sometimes even personal computers. But its default config out of the box leaves a lot to be desired.</p>
 <a id="more"></a>
+
 <h3 id="The-Nitty-Gritty"><a href="#The-Nitty-Gritty" class="headerlink" title="The Nitty Gritty"></a>The Nitty Gritty</h3><p>Goes in ~/.tmux.conf </p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># scrollback size</span><br><span class="line">set -g history-limit 10000</span><br><span class="line"></span><br><span class="line">################################</span><br><span class="line"># Keybinds</span><br><span class="line">###############################</span><br><span class="line"></span><br><span class="line"># Changing ctrl b to ctrl a as the command button</span><br><span class="line">unbind C-b</span><br><span class="line">set -g prefix C-a</span><br><span class="line"></span><br><span class="line"># set first window to index 1 (not 0) to map more to the keyboard layout</span><br><span class="line">set -g base-index 1</span><br><span class="line">set -g pane-base-index 1</span><br><span class="line"></span><br><span class="line"># pass through xterm keys</span><br><span class="line">set -g xterm-keys on</span><br><span class="line"></span><br><span class="line"># Keep your finger on ctrl, or don&apos;t, same result</span><br><span class="line">bind-key C-d detach-client</span><br><span class="line">bind-key C-p paste-buffer</span><br><span class="line"></span><br><span class="line"># Redraw the client (if interrupted by wall, etc)</span><br><span class="line">bind R refresh-client</span><br><span class="line"></span><br><span class="line"># reload tmux config with ctrl + a + r</span><br><span class="line"> unbind r</span><br><span class="line"> bind r \</span><br><span class="line">     source-file ~/.tmux.conf \;\</span><br><span class="line">         display &apos;Reloaded tmux config.&apos;</span><br><span class="line"></span><br><span class="line"># Vertical splits with g or C-g</span><br><span class="line">unbind g </span><br><span class="line">unbind C-g</span><br><span class="line">bind-key g split-window -h</span><br><span class="line">bind-key C-g split-window -h</span><br><span class="line"></span><br><span class="line"># Horizontal splits with v or C-h</span><br><span class="line">unbind h</span><br><span class="line">unbind C-h</span><br><span class="line">bind-key h split-window</span><br><span class="line">bind-key C-h split-window</span><br><span class="line"></span><br><span class="line"># Ctrl + a + o rename window</span><br><span class="line"># unbind o</span><br><span class="line"># unbind C-o</span><br><span class="line"># bind-key C-o rename-window</span><br><span class="line"></span><br><span class="line"># Using the mouse to switch panes</span><br><span class="line">set -g mouse-utf8 on</span><br><span class="line">set -g mouse on</span><br><span class="line"></span><br><span class="line"># Ctrl - t or t new window</span><br><span class="line">unbind t</span><br><span class="line">unbind C-t</span><br><span class="line">bind-key t new-window</span><br><span class="line">bind-key C-t new-window</span><br><span class="line"></span><br><span class="line"># Ctrl - w or w to kill panes</span><br><span class="line">unbind w</span><br><span class="line">unbind C-w</span><br><span class="line">bind-key w kill-pane</span><br><span class="line">bind-key C-w kill-pane</span><br><span class="line"></span><br><span class="line"># C + control q to kill session</span><br><span class="line">unbind q</span><br><span class="line">unbind C-q</span><br><span class="line">bind-key q kill-session</span><br><span class="line">bind-key C-q kill-session</span><br><span class="line"></span><br><span class="line"># Switching panes with alt</span><br><span class="line">bind -n M-Left select-pane -L</span><br><span class="line">bind -n M-Right select-pane -R</span><br><span class="line">bind -n M-Up select-pane -U</span><br><span class="line">bind -n M-Down select-pane -D</span><br><span class="line"></span><br><span class="line"># Ctrl + a + n : New session</span><br><span class="line">unbind n</span><br><span class="line">unbind C-n</span><br><span class="line">bind-key n new-session</span><br><span class="line">bind-key C-n new-session</span><br><span class="line"></span><br><span class="line"># Ctrl + a + Pagedown : Next window</span><br><span class="line">#unbind Pagedown</span><br><span class="line">unbind Pagedown</span><br><span class="line">bind-key Pagedown next-window</span><br><span class="line"></span><br><span class="line"># Ctrl + a + Pagup : Previous window</span><br><span class="line">#unbind Pageup</span><br><span class="line">unbind Pageup</span><br><span class="line">bind-key Pageup previous-window</span><br><span class="line"></span><br><span class="line"># Zoom with ctrl + a + ctrl + &apos;+&apos;</span><br><span class="line">#unbind C-+</span><br><span class="line">#bind C-+ \</span><br><span class="line">#new-window -d -n tmux-zoom &apos;clear &amp;&amp; echo TMUX ZOOM &amp;&amp; read&apos;\;\</span><br><span class="line">#swap-pane -s tmux-zoom.0 \;\</span><br><span class="line">#select-window -t tmux-zoom</span><br><span class="line"></span><br><span class="line"># Zoom back ctrl + a + ctrl + &apos;-&apos;</span><br><span class="line">#unbind C--</span><br><span class="line">#bind C-- \</span><br><span class="line">#	last-window \;\</span><br><span class="line">#	swap-pane -s tmux-zoom.0 \;\</span><br><span class="line">#	kill-window -t tmux-zoom</span><br><span class="line"></span><br><span class="line"># Visual Activity Monitoring between windows</span><br><span class="line">setw -g monitor-activity on</span><br><span class="line">set -g visual-activity on</span><br><span class="line"></span><br><span class="line"># Show tmux positions in titles</span><br><span class="line">set -g set-titles on</span><br><span class="line"></span><br><span class="line"># Set up a basic panel structure for command + ctr D</span><br><span class="line">bind D source-file ~/.tmux/dev</span><br><span class="line"></span><br><span class="line"># Attach to a session if runs otherwise create a new one</span><br><span class="line">new-session -n $HOST</span><br></pre></td></tr></table></figure>
       
@@ -576,7 +577,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -611,11 +612,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -722,7 +719,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

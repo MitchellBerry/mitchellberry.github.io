@@ -466,8 +466,12 @@
 <li><a href="#host-name">Change hostname</a></li>
 </ul>
 <a id="more"></a>
-<p><br><br><a name="copy-filetype"></a></p>
-<h5 id="Find-and-copy-only-certain-file-type"><a href="#Find-and-copy-only-certain-file-type" class="headerlink" title="Find and copy only certain file type"></a>Find and copy only certain file type</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find -iname <span class="string">'*.mp3'</span> -<span class="built_in">exec</span> cp &#123;&#125; /home/mb/music \;</span><br></pre></td></tr></table></figure>
+
+<br>
+<a name="copy-filetype">
+##### Find and copy only certain file type
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find -iname <span class="string">'*.mp3'</span> -<span class="built_in">exec</span> cp &#123;&#125; /home/mb/music \;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><p>-iname ‘*.mp3’ – Search for files matching with extension .mp3</p>
 </li>
@@ -477,11 +481,14 @@
 </li>
 <li><p>/home/mb/music/ – Target directory to save the matching files.</p>
 </li>
-<li><p>\; – Indicates it that the commands to be executed are now complete, and to carry out the command again on the next match.</p>
+<li><p>; – Indicates it that the commands to be executed are now complete, and to carry out the command again on the next match.</p>
 </li>
 </ul>
-<p><br><br><a name="list-ports"></a></p>
-<h5 id="List-all-open-ports"><a href="#List-all-open-ports" class="headerlink" title="List all open ports"></a>List all open ports</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -lntup</span><br></pre></td></tr></table></figure>
+<br>
+<a name="list-ports">
+##### List all open ports
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -lntup</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>-l only services which are listening on some port</li>
 <li>-n show port number, don’t try to resolve the service name</li>
@@ -489,25 +496,58 @@
 <li>-u udp ports</li>
 <li>-p name of the program</li>
 </ul>
-<p><br><br><a name="word-replace"></a></p>
-<h5 id="Replace-words-in-text-files-Sed"><a href="#Replace-words-in-text-files-Sed" class="headerlink" title="Replace words in text files (Sed)"></a>Replace words in text files (Sed)</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search for all words TEXT in file /tmp/foo and change line in place to NEWTEXT</span></span><br><span class="line">sed -i <span class="string">'/TEXT/c\NEWTEXT'</span> /tmp/foo</span><br><span class="line"><span class="comment"># Change word on particular line</span></span><br><span class="line">sed -i <span class="string">'27s/TEXT/NEWTEXT/'</span> /tmp/foo</span><br></pre></td></tr></table></figure>
-<p><br><br><a name="diff-user"></a></p>
-<h5 id="Run-command-as-different-user"><a href="#Run-command-as-different-user" class="headerlink" title="Run command as different user"></a>Run command as different user</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Requires root</span></span><br><span class="line">runuser -l mitchell -c <span class="string">"whoami"</span></span><br></pre></td></tr></table></figure>
-<p><br><br><a name="user=info"></a></p>
-<h5 id="Get-user-info-groups-uid-gid"><a href="#Get-user-info-groups-uid-gid" class="headerlink" title="Get user info (groups/uid/gid)"></a>Get user info (groups/uid/gid)</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">id janitor</span><br></pre></td></tr></table></figure>
-<p><br><br><a name="flush-iptable"></a></p>
-<h5 id="Wipe-clean-iptables-accept-all"><a href="#Wipe-clean-iptables-accept-all" class="headerlink" title="Wipe clean iptables, accept all"></a>Wipe clean iptables, accept all</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -P INPUT ACCEPT &amp;&amp;</span><br><span class="line">iptables -P FORWARD ACCEPT &amp;&amp;</span><br><span class="line">iptables -P OUTPUT ACCEPT &amp;&amp;</span><br><span class="line">iptables -t nat -F &amp;&amp;</span><br><span class="line">iptables -t mangle -F &amp;&amp;</span><br><span class="line">iptables -F &amp;&amp;</span><br><span class="line">iptables -X &amp;&amp;</span><br><span class="line">ip6tables -P INPUT ACCEPT &amp;&amp;</span><br><span class="line">ip6tables -P FORWARD ACCEPT &amp;&amp;</span><br><span class="line">ip6tables -P OUTPUT ACCEPT &amp;&amp;</span><br><span class="line">ip6tables -t nat -F &amp;&amp;</span><br><span class="line">ip6tables -t mangle -F &amp;&amp;</span><br><span class="line">ip6tables -F &amp;&amp;</span><br><span class="line">ip6tables -X</span><br></pre></td></tr></table></figure>
-<p><br><br><a name="deny-ipv6"></a></p>
-<h5 id="Drop-all-ipv6-connections"><a href="#Drop-all-ipv6-connections" class="headerlink" title="Drop all ipv6 connections"></a>Drop all ipv6 connections</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ip6tables -P INPUT DROP &amp;&amp;</span><br><span class="line">ip6tables -P FORWARD DROP &amp;&amp;</span><br><span class="line">ip6tables -P OUTPUT DROP</span><br></pre></td></tr></table></figure>
-<p><br><br><a name="webserver-iptables"></a></p>
-<h5 id="Webserver-iptables-setup-Uses-a-custom-ssh-port"><a href="#Webserver-iptables-setup-Uses-a-custom-ssh-port" class="headerlink" title="Webserver iptables setup (Uses a custom ssh port)"></a>Webserver iptables setup (Uses a custom ssh port)</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># The loopback interface, also referred to as lo, is what a computer uses to forward network connections to itself.</span></span><br><span class="line"><span class="comment"># also used if you configure your application server to connect to a database server with a "localhost" address</span></span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT &amp;&amp;</span><br><span class="line">iptables -A OUTPUT -o lo -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a firewall rule that allows established and related incoming traffic, so that the server will allow return traffic to outgoing connections initiated by the server itself</span></span><br><span class="line">iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># allow outgoing traffic of all established connections, which are typically the response to legitimate incoming connections</span></span><br><span class="line">iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Some network traffic packets get marked as invalid. Sometimes it can be useful to log this type of packet but often it is fine to drop them. </span></span><br><span class="line">iptables -A INPUT -m conntrack --ctstate INVALID -j DROP &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># SSH Custom port</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 2444 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line"><span class="comment"># only necessary if the OUTPUT policy is not set to ACCEPT</span></span><br><span class="line">iptables -A OUTPUT -p tcp --sport 2444 -m conntrack --ctstate ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># allow both HTTP and HTTPS traffic</span></span><br><span class="line">iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line">iptables -A OUTPUT -p tcp -m multiport --sports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># drop the rest, ignoring forwarding</span></span><br><span class="line">iptables -P INPUT DROP &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># basic file for backup</span></span><br><span class="line">iptables-save &gt; ~/ruleset-v4 &amp;&amp;</span><br><span class="line">ip6tables-save &gt; ~/ruleset-v6 &amp;&amp;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"### iptables setup complete ###"</span></span><br></pre></td></tr></table></figure>
-<p><br><br><a name="no-logs"></a></p>
-<h5 id="Disable-system-logging"><a href="#Disable-system-logging" class="headerlink" title="Disable system logging"></a>Disable system logging</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service rsyslog stop</span><br><span class="line">systemctl <span class="built_in">disable</span> rsyslog</span><br></pre></td></tr></table></figure>
-<p><br><br><a name="download-unzip"></a></p>
-<h5 id="Download-and-unzip-file-one-liner"><a href="#Download-and-unzip-file-one-liner" class="headerlink" title="Download and unzip file one liner"></a>Download and unzip file one liner</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"Please enter url"</span>;</span><br><span class="line">url = input()</span><br></pre></td></tr></table></figure>
-<p><br><br><a name="sudo-time"><br>Time is in minutes. Use “-1” for infinite or “0” for never.<br>DO NOT modify the file any other way besides using visudo.<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo visudo</span><br><span class="line"><span class="comment"># append to file</span></span><br><span class="line">Defaults:USER timestamp_timeout=30</span><br></pre></td></tr></table></figure></a></p>
-<p><br><br><a name="host-name"><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo hostname &lt;new-server-name-here&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># edit the /etc/hostname file and update hostname:</span></span><br><span class="line">sudo nano /etc/hostname</span><br><span class="line"></span><br><span class="line"><span class="comment"># edit the /etc/hosts file and update the lines that reads your old-host-name:</span></span><br><span class="line">sudo nano /etc/hosts</span><br></pre></td></tr></table></figure></a></p>
+<br>
+<a name="word-replace">
+##### Replace words in text files (Sed)
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Search for all words TEXT in file /tmp/foo and change line in place to NEWTEXT</span></span><br><span class="line">sed -i <span class="string">'/TEXT/c\NEWTEXT'</span> /tmp/foo</span><br><span class="line"><span class="comment"># Change word on particular line</span></span><br><span class="line">sed -i <span class="string">'27s/TEXT/NEWTEXT/'</span> /tmp/foo</span><br></pre></td></tr></table></figure>
 
+<br>
+<a name="diff-user">
+##### Run command as different user
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Requires root</span></span><br><span class="line">runuser -l mitchell -c <span class="string">"whoami"</span></span><br></pre></td></tr></table></figure>
+
+<br>
+<a name="user=info">
+##### Get user info (groups/uid/gid) 
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">id janitor</span><br></pre></td></tr></table></figure>
+
+<br>
+<a name="flush-iptable">
+##### Wipe clean iptables, accept all
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -P INPUT ACCEPT &amp;&amp;</span><br><span class="line">iptables -P FORWARD ACCEPT &amp;&amp;</span><br><span class="line">iptables -P OUTPUT ACCEPT &amp;&amp;</span><br><span class="line">iptables -t nat -F &amp;&amp;</span><br><span class="line">iptables -t mangle -F &amp;&amp;</span><br><span class="line">iptables -F &amp;&amp;</span><br><span class="line">iptables -X &amp;&amp;</span><br><span class="line">ip6tables -P INPUT ACCEPT &amp;&amp;</span><br><span class="line">ip6tables -P FORWARD ACCEPT &amp;&amp;</span><br><span class="line">ip6tables -P OUTPUT ACCEPT &amp;&amp;</span><br><span class="line">ip6tables -t nat -F &amp;&amp;</span><br><span class="line">ip6tables -t mangle -F &amp;&amp;</span><br><span class="line">ip6tables -F &amp;&amp;</span><br><span class="line">ip6tables -X</span><br></pre></td></tr></table></figure>
+
+<br>
+<a name="deny-ipv6">
+##### Drop all ipv6 connections
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ip6tables -P INPUT DROP &amp;&amp;</span><br><span class="line">ip6tables -P FORWARD DROP &amp;&amp;</span><br><span class="line">ip6tables -P OUTPUT DROP</span><br></pre></td></tr></table></figure>
+
+<br>
+<a name="webserver-iptables">
+##### Webserver iptables setup (Uses a custom ssh port)
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># The loopback interface, also referred to as lo, is what a computer uses to forward network connections to itself.</span></span><br><span class="line"><span class="comment"># also used if you configure your application server to connect to a database server with a "localhost" address</span></span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT &amp;&amp;</span><br><span class="line">iptables -A OUTPUT -o lo -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a firewall rule that allows established and related incoming traffic, so that the server will allow return traffic to outgoing connections initiated by the server itself</span></span><br><span class="line">iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># allow outgoing traffic of all established connections, which are typically the response to legitimate incoming connections</span></span><br><span class="line">iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Some network traffic packets get marked as invalid. Sometimes it can be useful to log this type of packet but often it is fine to drop them. </span></span><br><span class="line">iptables -A INPUT -m conntrack --ctstate INVALID -j DROP &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># SSH Custom port</span></span><br><span class="line">iptables -A INPUT -p tcp --dport 2444 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line"><span class="comment"># only necessary if the OUTPUT policy is not set to ACCEPT</span></span><br><span class="line">iptables -A OUTPUT -p tcp --sport 2444 -m conntrack --ctstate ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># allow both HTTP and HTTPS traffic</span></span><br><span class="line">iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line">iptables -A OUTPUT -p tcp -m multiport --sports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># drop the rest, ignoring forwarding</span></span><br><span class="line">iptables -P INPUT DROP &amp;&amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># basic file for backup</span></span><br><span class="line">iptables-save &gt; ~/ruleset-v4 &amp;&amp;</span><br><span class="line">ip6tables-save &gt; ~/ruleset-v6 &amp;&amp;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"### iptables setup complete ###"</span></span><br></pre></td></tr></table></figure>
+
+<br>
+<a name="no-logs">
+##### Disable system logging
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">service rsyslog stop</span><br><span class="line">systemctl <span class="built_in">disable</span> rsyslog</span><br></pre></td></tr></table></figure>
+
+<br> 
+<a name="download-unzip">
+##### Download and unzip file one liner
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"Please enter url"</span>;</span><br><span class="line">url = input()</span><br></pre></td></tr></table></figure>
+
+<br> 
+<a name="sudo-time">
+Time is in minutes. Use "-1" for infinite or "0" for never.
+DO NOT modify the file any other way besides using visudo.
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo visudo</span><br><span class="line"><span class="comment"># append to file</span></span><br><span class="line">Defaults:USER timestamp_timeout=30</span><br></pre></td></tr></table></figure>
+
+<br> 
+<a name="host-name">
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo hostname &lt;new-server-name-here&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># edit the /etc/hostname file and update hostname:</span></span><br><span class="line">sudo nano /etc/hostname</span><br><span class="line"></span><br><span class="line"><span class="comment"># edit the /etc/hosts file and update the lines that reads your old-host-name:</span></span><br><span class="line">sudo nano /etc/hosts</span><br></pre></td></tr></table></figure>
+
+</a></a></a></a></a></a></a></a></a></a></a></a>
       
     </div>
 
@@ -628,7 +668,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -663,11 +703,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -774,7 +810,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -812,7 +850,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Find-and-copy-only-certain-file-type"><span class="nav-number">2.</span> <span class="nav-text">Find and copy only certain file type</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#List-all-open-ports"><span class="nav-number">3.</span> <span class="nav-text">List all open ports</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Replace-words-in-text-files-Sed"><span class="nav-number">4.</span> <span class="nav-text">Replace words in text files (Sed)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Run-command-as-different-user"><span class="nav-number">5.</span> <span class="nav-text">Run command as different user</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Get-user-info-groups-uid-gid"><span class="nav-number">6.</span> <span class="nav-text">Get user info (groups/uid/gid)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Wipe-clean-iptables-accept-all"><span class="nav-number">7.</span> <span class="nav-text">Wipe clean iptables, accept all</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Drop-all-ipv6-connections"><span class="nav-number">8.</span> <span class="nav-text">Drop all ipv6 connections</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Webserver-iptables-setup-Uses-a-custom-ssh-port"><span class="nav-number">9.</span> <span class="nav-text">Webserver iptables setup (Uses a custom ssh port)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Disable-system-logging"><span class="nav-number">10.</span> <span class="nav-text">Disable system logging</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Download-and-unzip-file-one-liner"><span class="nav-number">11.</span> <span class="nav-text">Download and unzip file one liner</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li></ol></div>
             
 
           </div>

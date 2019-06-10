@@ -454,8 +454,10 @@
       
         <p>Rust macros are powerful tools able to go beyond the capabilites of normal functions, this comes at the expense of debugging ease and readability.</p>
 <a id="more"></a>
+
 <h5 id="General-rules-of-thumb"><a href="#General-rules-of-thumb" class="headerlink" title="General rules of thumb"></a>General rules of thumb</h5><p>(note: in these examples, $pat means you should match that sort of thing with $something:pat, and the same goes for $path, $ident, $expr, etc.)</p>
 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> $pat = $expr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> $pat <span class="keyword">in</span> $expr $block</span><br><span class="line"></span><br><span class="line"><span class="keyword">match</span> $expr &#123;</span><br><span class="line">    $pat =&gt; $expr,</span><br><span class="line">    $pat <span class="keyword">if</span> $expr =&gt; $expr,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> $<span class="title">ident</span></span>($pat: $ty) $block   <span class="comment">// &lt;-- best choice where possible</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> $<span class="title">ident</span></span>($ident: $ty) $block <span class="comment">// &lt;-- sometimes you're forced to do this</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> $ident = |$pat| $expr;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function call</span></span><br><span class="line">$expr($expr)  <span class="comment">// &lt;-- best choice where possible, works even for closures</span></span><br><span class="line">$path($expr)  <span class="comment">// &lt;-- second best, still supports e.g. `Option::Some::&lt;u64&gt;`</span></span><br><span class="line">$ident($expr) <span class="comment">// &lt;-- please don't do this</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// struct member access</span></span><br><span class="line">$expr.$ident</span><br><span class="line"></span><br><span class="line"><span class="comment">// struct method (this won't support the turbofish syntax, but I don't</span></span><br><span class="line"><span class="comment">//                think anything will)</span></span><br><span class="line">$expr.$ident($expr)</span><br><span class="line"></span><br><span class="line"><span class="comment">// struct declaration</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> $<span class="title">ident</span></span> &#123; $ident: $ty &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// struct destructuring</span></span><br><span class="line"><span class="keyword">let</span> $path &#123; $ident: $pat &#125; = $expr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">mod</span> $ident &#123;</span><br><span class="line">    $($item)*</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h5 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h5><p>Official: <a href="https://doc.rust-lang.org/book/ch19-06-macros.html" target="_blank" rel="noopener">https://doc.rust-lang.org/book/ch19-06-macros.html</a></p>
 <p><a href="https://danielkeep.github.io/quick-intro-to-macros.html" target="_blank" rel="noopener">https://danielkeep.github.io/quick-intro-to-macros.html</a></p>
 <p><a href="https://danielkeep.github.io/tlborm/book/README.html" target="_blank" rel="noopener">https://danielkeep.github.io/tlborm/book/README.html</a></p>
@@ -578,7 +580,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -613,11 +615,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -724,7 +722,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">45</span>
+                      
+                    
+                    <span class="site-state-item-count">46</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
