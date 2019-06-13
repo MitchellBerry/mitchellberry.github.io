@@ -136,7 +136,7 @@
 <meta property="og:site_name" content="Cybernated">
 <meta property="og:description" content="Networking with Linux containers.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-07T11:11:11.478Z">
+<meta property="og:updated_time" content="2019-06-13T01:18:01.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Port Forwarding to LXC">
 <meta name="twitter:description" content="Networking with Linux containers.">
@@ -463,8 +463,8 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tarting Nmap 7.40 ( https://nmap.org ) at 2019-04-09 03:08 UTC</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.0.3.144</span><br><span class="line">Host is up (-0.20s latency).</span><br><span class="line">PORT     STATE         SERVICE</span><br><span class="line">1812/udp open|filtered radius</span><br><span class="line">MAC Address: 00:16:3E:F8:C4:92 (Xensource)</span><br></pre></td></tr></table></figure>
 
 <p>Radius is responding on port 1812</p>
-<p>Inject rule at top of iptables and forward udp from host:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -I FORWARD -p udp -d 10.0.3.144 --dport 1812 -j ACCEPT</span><br></pre></td></tr></table></figure>
+<p>Requires some prerouting and then and forward udp packets on that port from the host:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iptables -t nat -A PREROUTING -p udp --dport 1812 -j DNAT --to-destination 10.0.3.144</span><br><span class="line">iptables -I FORWARD -p udp -d 10.0.3.144 --dport 1812 -j ACCEPT</span><br></pre></td></tr></table></figure>
 
 
       
@@ -587,7 +587,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -731,7 +731,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">46</span>
+                      
+                    
+                    <span class="site-state-item-count">47</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

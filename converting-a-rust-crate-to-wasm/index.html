@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Hack:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Starting from scratch and delving into targeting a wasm build from a simple rust crate with only two dependencies: sha2 and rand. Seems simple? Perhaps. Warts and all with the failures so I remember f">
+<meta name="keywords" content="Rust, Wasm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Converting a Rust Crate to Wasm">
+<meta property="og:url" content="mitchellberry.github.io/converting-a-rust-crate-to-wasm/index.html">
+<meta property="og:site_name" content="Cybernated">
+<meta property="og:description" content="Starting from scratch and delving into targeting a wasm build from a simple rust crate with only two dependencies: sha2 and rand. Seems simple? Perhaps. Warts and all with the failures so I remember f">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-06-13T12:55:49.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Converting a Rust Crate to Wasm">
+<meta name="twitter:description" content="Starting from scratch and delving into targeting a wasm build from a simple rust crate with only two dependencies: sha2 and rand. Seems simple? Perhaps. Warts and all with the failures so I remember f">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="mitchellberry.github.io/converting-a-rust-crate-to-wasm/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Converting a Rust Crate to Wasm | Cybernated</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cybernated</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="mitchellberry.github.io/converting-a-rust-crate-to-wasm/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mitchell Berry">
+      <meta itemprop="description" content="An assortment of digital tidbits.">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cybernated">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Converting a Rust Crate to Wasm
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: June-2019 20:55:49" itemprop="dateCreated datePublished" datetime="2019-06-13T20:55:49+10:00">June-2019</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/guides/" itemprop="url" rel="index"><span itemprop="name">Guides</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Starting from scratch and delving into targeting a wasm build from a <em>simple</em> rust crate with only two dependencies: <code>sha2</code> and <code>rand</code>. Seems simple? Perhaps. Warts and all with the failures so I remember for next time.  </p>
+<a id="more"></a>
+<h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><ul>
+<li><p><a href="https://rustwasm.github.io/wasm-pack/installer/" target="_blank" rel="noopener">wasm-pack</a></p>
+</li>
+<li><p><a href="https://www.npmjs.com/get-npm" target="_blank" rel="noopener">npm</a></p>
+</li>
+</ul>
+<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><p>Additions to Cargo.toml</p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[lib]</span></span><br><span class="line"><span class="attr">crate-type</span> = [<span class="string">"cdylib"</span>, <span class="string">"rlib"</span>]</span><br><span class="line"></span><br><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">wasm-bindgen</span> = &#123; version = <span class="string">"0.2"</span>, optional = <span class="literal">true</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">[features]</span></span><br><span class="line"><span class="attr">wasm</span> = [<span class="string">"wasm-bindgen"</span>]</span><br><span class="line"></span><br><span class="line"><span class="section">[profile.release]</span></span><br><span class="line"><span class="comment"># Tell `rustc` to optimize for small code size.</span></span><br><span class="line"><span class="attr">opt-level</span> = <span class="string">"s"</span></span><br></pre></td></tr></table></figure>
+
+<p>Inside the project directory:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wasm-pack build</span><br></pre></td></tr></table></figure>
+
+<p>This produces artifacts inside a new directory <code>pkg</code>:</p>
+<ul>
+<li><p>The .wasm file is the WebAssembly binary that is generated by the Rust compiler from our Rust sources. It contains the compiled-to-wasm versions of all of our Rust functions and data. </p>
+</li>
+<li><p>The .js file is generated by wasm-bindgen and contains JavaScript glue for importing DOM and JavaScript functions into Rust and exposing a nice API to the WebAssembly functions to JavaScript. Right now, this glue isn’t doing much, but when we start passing more interesting values back and forth between wasm and JavaScript, it will help shepherd those values across the boundary.</p>
+</li>
+<li><p>The .d.ts file contains TypeScript type declarations for the JavaScript glue. If you are using TypeScript, you can have your calls into WebAssembly functions type checked, and your IDE can provide autocompletions and suggestions! If you aren’t using TypeScript, you can safely ignore this file.</p>
+</li>
+<li><p>The package.json file contains metadata about the generated JavaScript and WebAssembly package. This is used by npm and JavaScript bundlers to determine dependencies across packages, package names, versions, and a bunch of other stuff. It helps us integrate with JavaScript tooling and allows us to publish our package to npm.</p>
+</li>
+</ul>
+<p>To build a web page template run in the project directory:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm init wasm-app www</span><br></pre></td></tr></table></figure>
+
+<p>Inside the new <code>www</code> folder:</p>
+<ul>
+<li><p>package.json comes pre-configured with webpack and webpack-dev-server dependencies, as well as a dependency on hello-wasm-pack, which is a version of the initial wasm-pack-template package that has been published to npm.</p>
+</li>
+<li><p>webpack.config.js configures webpack and its local development server. It comes pre-configured, and you shouldn’t have to tweak this at all to get webpack and its local development server working.</p>
+</li>
+<li><p>index.html is the root HTML file for the Web page. It doesn’t do much other than load bootstrap.js, which is a very thin wrapper around index.js.</p>
+</li>
+<li><p>index.js is the main entry point for our Web page’s JavaScript. It imports the hello-wasm-pack npm package, which contains the default wasm-pack-template’s compiled WebAssembly and JavaScript glue, then it calls hello-wasm-pack’s greet function.</p>
+</li>
+</ul>
+<p>Rather than use the hello-wasm-pack package from npm, we want to use our project instead.</p>
+<p>Modify <code>&lt;project&gt;/www/package.json</code> to include:</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">"dependencies": &#123;</span><br><span class="line">    "&lt;project&gt;": "file:../pkg"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Replace all lines in <code>&lt;project&gt;/www/index.js</code> with:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> wasm <span class="keyword">from</span> <span class="string">"&lt;project&gt;"</span></span><br></pre></td></tr></table></figure>
+
+<p>In the <code>www</code> directory install all the depenencies:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<h4 id="Running-a-local-development-server"><a href="#Running-a-local-development-server" class="headerlink" title="Running a local development server"></a>Running a local development server</h4><p>In the <code>www</code> directory:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm run start</span><br></pre></td></tr></table></figure>
+
+<p>Navigate to <a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></p>
+<p>It should be healthily blank and returning a 200 status.</p>
+<h4 id="Wasm-Pack-Build-Error"><a href="#Wasm-Pack-Build-Error" class="headerlink" title="Wasm-Pack Build Error"></a>Wasm-Pack Build Error</h4><p>Along the way I ended up with a frustrating build error for a wasm-dependency. </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">error: Could not compile `wasm-bindgen-macro-support`.</span><br></pre></td></tr></table></figure>
+
+<p>Struggling through semi-related wasm build issues on github I found someone who solved it by simply deleting Cargo.lock and surprisingly it worked a treat.</p>
+<h2 id="Adding-functionality"><a href="#Adding-functionality" class="headerlink" title="Adding functionality"></a>Adding functionality</h2><p>This example will be using a KEM implementation I wrote with 3 public functions available: </p>
+<ul>
+<li><code>generate_key()</code></li>
+<li><code>encapsulate(public_key)</code></li>
+<li><code>decapsulate(cipher_text, private_key)</code>.  </li>
+</ul>
+<h4 id="Adding-a-button-to-generate-a-keypair"><a href="#Adding-a-button-to-generate-a-keypair" class="headerlink" title="Adding a button to generate a keypair."></a>Adding a button to generate a keypair.</h4><p>Modify <code>www/index.html</code>:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"generate-key"</span>&gt;</span>Generate Keys<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"publicKey"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"privateKey"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./bootstrap.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Add an event listener in <code>www/index.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> generateKeyButton = <span class="built_in">document</span>.getElementById(<span class="string">"generate-key"</span>);</span><br><span class="line"></span><br><span class="line">generateKeyButton.addEventListener(<span class="string">"click"</span>, event =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> [public_key, private_key] = wasm.generate_key();</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"publicKey"</span>).innerHTML = public_key;</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"privateKey"</span>).innerHTML = private_key;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Add the wasm_bindgen attribute to <code>src/lib.rs</code> in order for rust functions to cross the wasm ABI:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">crate</span> wasm_bindgen;</span><br><span class="line"><span class="keyword">use</span> wasm_bindgen::prelude::*;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[wasm_bindgen]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">generate_key</span></span>()-&gt;([<span class="built_in">u8</span>; PK_SIZE], [<span class="built_in">u8</span>; SK_SIZE])&#123;</span><br><span class="line"><span class="comment">/// trimmed</span></span><br></pre></td></tr></table></figure>
+
+<p>Build: </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wasm-pack build</span><br></pre></td></tr></table></figure>
+
+<p>Oh:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">error[E0277]: the trait bound `([u8; 1218], [u8; 1600]): wasm_bindgen::convert::IntoWasmAbi` is not satisfied</span><br></pre></td></tr></table></figure>
+
+<p>So what types are in bounds and can be exported?  </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>T parameter</th>
+<th>&amp;T parameter</th>
+<th>&amp;mut T parameter</th>
+<th>T return value</th>
+<th>Option<t> parameter</t></th>
+<th>Option<t></t></th>
+<th>JavaScript</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Struct types</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Instances of a wasm-bindgen-generated JavaScript class Whatever { … }</td>
+</tr>
+<tr>
+<td>*const T and *mut T</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>A JavaScript number value</td>
+</tr>
+<tr>
+<td>Numbers (u8, i16, f32, etc.)</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>A JavaScript number value</td>
+</tr>
+<tr>
+<td>bool</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>A JavaScript boolean value</td>
+</tr>
+<tr>
+<td>char</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>A JavaScript string value</td>
+</tr>
+<tr>
+<td>str</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>JavaScript string value</td>
+</tr>
+<tr>
+<td>String</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>JavaScript string value</td>
+</tr>
+<tr>
+<td>Number Slices</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>A JavaScript TypedArray view of the Wasm memory for the boxed slice of the appropriate type (Int32Array, Uint8Array, etc)</td>
+</tr>
+<tr>
+<td>Boxed Number Slices</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>A JavaScript TypedArray of the appropriate type (Int32Array, Uint8Array, etc…)</td>
+</tr>
+<tr>
+<td>Result&lt;T, JsValue&gt;</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Same as T, or an exception</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Whew. The finer details along with imports and using JsValue types can be found <a href="https://rustwasm.github.io/docs/wasm-bindgen/reference/types.html" target="_blank" rel="noopener">here</a></p>
+<p>While it says number slice<em>s</em> you can only return one. Boxing up the tuple from the somewhat inaccurately named generate_key() function also won’t work. So a struct it is.</p>
+<p>To avoid breaking the API I’ll make a new function for now that returns a Keys struct.</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#[wasm_bindgen]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Keys</span></span>&#123;</span><br><span class="line">    public: <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt;,</span><br><span class="line">    private: <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[wasm_bindgen]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">generate_key_wasm</span></span>()-&gt; Keys&#123;</span><br><span class="line"><span class="comment">/// trimmed</span></span><br></pre></td></tr></table></figure>
+
+<p>And… it builds!</p>
+<p>Going back to <code>www/index.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">generateKeyButton.addEventListener(<span class="string">"click"</span>, event =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> keys = wasm.generate_key_wasm();</span><br><span class="line">    <span class="keyword">const</span> pubkey = keys.public();</span><br><span class="line">    <span class="keyword">const</span> privkey = keys.private();</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"publicKey"</span>).innerHTML = toHexString(pubkey);</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"privateKey"</span>).innerHTML = toHexString(privkey); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Should be all good now right? Wrong.</p>
+<p>In the console when the click event is triggered:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">"RuntimeError: unreachable executed"</span></span><br></pre></td></tr></table></figure>
+
+<p>Highly informative error message, how wonderful.</p>
+<h2 id="Debugging"><a href="#Debugging" class="headerlink" title="Debugging"></a>Debugging</h2><p><code>set_panic_hook()</code> will push panic messages from rust into the browser console.</p>
+<p>In <code>Cargo.toml</code>:</p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="comment"># The `console_error_panic_hook` crate provides better debugging of panics by</span></span><br><span class="line"><span class="comment"># logging them with `console.error`. This is great for development, but requires</span></span><br><span class="line"><span class="comment"># all the `std::fmt` and `std::panicking` infrastructure, so isn't great for</span></span><br><span class="line"><span class="comment"># code size when deploying.</span></span><br><span class="line"><span class="attr">console_error_panic_hook</span> = &#123; version = <span class="string">"0.1.1"</span>, optional = <span class="literal">true</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="section">[features]</span></span><br><span class="line"><span class="attr">default</span> = [<span class="string">"console_error_panic_hook"</span>]</span><br></pre></td></tr></table></figure>
+
+<p>In <code>lib.rs</code>:</p>
+<figure class="highlight rs"><table><tr><td class="code"><pre><span class="line"><span class="meta">#[wasm_bindgen]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">generate_key_wasm</span></span>()-&gt; Keys&#123;</span><br><span class="line">    set_panic_hook();</span><br><span class="line"><span class="comment">/// Trimmed</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">set_panic_hook</span></span>() &#123;</span><br><span class="line">    <span class="comment">// When the `console_error_panic_hook` feature is enabled, we can call the</span></span><br><span class="line">    <span class="comment">// `set_panic_hook` function at least once during initialization, and then</span></span><br><span class="line">    <span class="comment">// we will get better error messages if our code ever panics.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// For more details see</span></span><br><span class="line">    <span class="comment">// https://github.com/rustwasm/console_error_panic_hook#readme</span></span><br><span class="line">    <span class="meta">#[cfg(feature = <span class="meta-string">"console_error_panic_hook"</span>)]</span></span><br><span class="line">    console_error_panic_hook::set_once();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The new error message in the browser console:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">panicked at <span class="string">'could not initialize thread_rng: All entropy sources failed (permanently unavailable); cause: OsRng: support for wasm32 requires emscripten, stdweb or wasm-bindgen (permanently unavailable)'</span>, /home/mtchll/.cargo/registry/src/github.com-1ecc6299db9ec823/rand-0.6.5/src/rngs/thread.rs:80:17</span><br></pre></td></tr></table></figure>
+
+<p>Tremendous. </p>
+<p>Despite only two crates and wasm_bindgen as dependencies, it still needs some work. Rand since 0.6 has now got wasm support as a feature. In <code>Cargo.toml</code>:</p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">rand</span> = &#123;version = <span class="string">"0.6.5"</span>, features =[<span class="string">"wasm-bindgen"</span>]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Build again with <code>wasm-pack build</code>.</p>
+<p>We have action! In the form of two undefined variables appearing on a click event.</p>
+<h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h2><p>In <code>Cargo.toml</code>:</p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">web-sys</span> = &#123;version = <span class="string">"0.3.22"</span>, features = [<span class="string">"console"</span>]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In <code>lib.rs</code>:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">crate</span> web_sys;</span><br><span class="line"><span class="keyword">use</span> web_sys::console;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// Trimmed</span></span><br><span class="line">console::log_2(&amp;public, &amp;private);</span><br><span class="line">Keys(public, private)</span><br></pre></td></tr></table></figure>
+
+<p>And the error:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">expected struct `wasm_bindgen::JsValue`, found array of 1218 elements</span><br></pre></td></tr></table></figure>
+
+<p>More on JsValue <a href="https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen/struct.JsValue.html" target="_blank" rel="noopener">here</a></p>
+<p>The problem: Struct variables aren’t public. But the <code>Box&lt;[u8]&gt;</code> type doesn’t implement <code>copy</code>. It needs to be an explicit clone.</p>
+<p><code>Cargo.toml</code>:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#[wasm_bindgen]</span></span><br><span class="line"><span class="keyword">impl</span> Keys &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">public</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt; &#123;</span><br><span class="line">        <span class="keyword">self</span>.public.clone()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">private</span></span>(&amp;<span class="keyword">self</span>) -&gt; <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt; &#123;</span><br><span class="line">        <span class="keyword">self</span>.private.clone()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Format the byte array as a hex string in <code>www/index.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toHexString</span>(<span class="params">byteArray</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> byteArray.reduce(<span class="function">(<span class="params">output, elem</span>) =&gt;</span> </span><br><span class="line">    (output + (<span class="string">'0'</span> + elem.toString(<span class="number">16</span>)).slice(<span class="number">-2</span>)),</span><br><span class="line">    <span class="string">''</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>It’s alive! Now the other two.</p>
+<p>The original encapsulate function looks likes this:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">encapsulate</span></span>(pk : [<span class="built_in">u8</span>; PK_SIZE])-&gt; ([<span class="built_in">u8</span>; CT_SIZE], [<span class="built_in">u8</span>; K_SIZE])&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> r = [<span class="number">0i8</span>; P];</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> rng = rand::thread_rng();</span><br><span class="line">    zx::random::random_tsmall(&amp;<span class="keyword">mut</span> r, &amp;<span class="keyword">mut</span> rng);   </span><br><span class="line">    create_cipher(r, pk)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Wasm-bindgen won’t accept those array types so they need to be boxed, along with a struct and a function to convert the box into an array. </p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#[wasm_bindgen]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="class"><span class="keyword">struct</span> <span class="title">Encapsulated</span></span> &#123;</span><br><span class="line">    cipher_text: <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt;,</span><br><span class="line">    shared_key: <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[wasm_bindgen]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">encapsulate_wasm</span></span>(pk : <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt;)-&gt; Encapsulated &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> r = [<span class="number">0i8</span>; P];</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> rng = rand::thread_rng();</span><br><span class="line">    zx::random::random_tsmall(&amp;<span class="keyword">mut</span> r, &amp;<span class="keyword">mut</span> rng);   </span><br><span class="line">    <span class="keyword">let</span> (cipher, shared) = create_cipher(r, pk_box_to_array(pk));</span><br><span class="line">    Encapsulated &#123;</span><br><span class="line">        cipher_text: <span class="built_in">Box</span>::new(cipher),</span><br><span class="line">        shared_key: <span class="built_in">Box</span>::new(shared)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">pk_box_to_array</span></span>(pk: <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt;) -&gt; [<span class="built_in">u8</span>; PK_SIZE] &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> arr =[<span class="number">0u8</span>; PK_SIZE];</span><br><span class="line">    arr.copy_from_slice(&amp;pk);</span><br><span class="line">    arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The original decapsulate function:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">decapsulate</span></span>(cstr: [<span class="built_in">u8</span>; CT_SIZE], sk: [<span class="built_in">u8</span>; SK_SIZE])-&gt; <span class="built_in">Result</span>&lt;[<span class="built_in">u8</span>; K_SIZE], ()&gt; &#123;</span><br><span class="line">  <span class="comment">/// Trimmed</span></span><br><span class="line">  <span class="keyword">if</span> check &#123; <span class="literal">Ok</span>(k) &#125; <span class="keyword">else</span> &#123; <span class="literal">Err</span>(()) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This will need to be converted to:</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#[wasm_bindgen]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">decapsulate_wasm</span></span>(cstr: <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt;, sk: <span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt;)-&gt; <span class="built_in">Result</span>&lt;<span class="built_in">Box</span>&lt;[<span class="built_in">u8</span>]&gt;, JsValue&gt; &#123;</span><br><span class="line">  <span class="comment">/// Trimmed</span></span><br><span class="line">  <span class="keyword">if</span> check &#123; <span class="literal">Ok</span>(<span class="built_in">Box</span>::new(k)) &#125; <span class="keyword">else</span> &#123; <span class="literal">Err</span>(JsValue::null()) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The Uint8Array javascript types will be passed through the ABI and converted into <code>Box&lt;[u8]&gt;</code> types.</p>
+<p><code>index.html</code> additions:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"encapsulate"</span>&gt;</span>Encapsulate with Public Key<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">Cipher Text: </span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"cipherText"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">Shared Key: </span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"sharedKey"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"decapsulate"</span>&gt;</span>Decapsulate with Ciphertext and Secret Key<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">Shared Key: </span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"sharedKeyDecap"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Fixing up <code>index.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> encapButton = <span class="built_in">document</span>.getElementById(<span class="string">"encapsulate"</span>);</span><br><span class="line"><span class="keyword">const</span> decapButton = <span class="built_in">document</span>.getElementById(<span class="string">"decapsulate"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pubkey;</span><br><span class="line"><span class="keyword">var</span> privkey;</span><br><span class="line"><span class="keyword">var</span> cipher;</span><br><span class="line"></span><br><span class="line">encapButton.addEventListener(<span class="string">"click"</span>, event =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> encapsulated = wasm.encapsulate_wasm(pubkey);</span><br><span class="line">    cipher = encapsulated.cipher_text();</span><br><span class="line">    <span class="keyword">let</span> shared = encapsulated.shared_key();</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"cipherText"</span>).innerHTML = toHexString(cipher);</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"sharedKey"</span>).innerHTML = toHexString(shared);</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line">decapButton.addEventListener(<span class="string">"click"</span>, event =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> decapsulated = wasm.decapsulate_wasm(cipher, privkey);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"sharedKeyDecap"</span>).innerHTML = toHexString(decapsulated);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>And there it is. A Wasm implementation of the Streamlined NTRU Prime 4591<sup>761</sup> algorithm ready to be used in the browser. This was only intended as a naive starting from scratch walkthrough with all the messy bits included of learning-to-wasm, a lot more cleaning up and adding conditional compilation is needed before merging the wasm branch created here. </p>
+<h2 id="Binary-Size"><a href="#Binary-Size" class="headerlink" title="Binary Size"></a>Binary Size</h2><p>With logging and panic hooks still included the <code>streamlined_ntru_prime_bg.wasm</code> comes out at 110 KB. Removing those gets it down to 92 KB, the release profile has the LLVM opt-level of “s” to optimise for small size. Changing that to “z” yields 95 KB despite which can happen despite being the ultra-small option. </p>
+<p>Adding <code>lto = true</code> to the profile.release section in <code>Cargo.toml</code> will add link time optimisations. </p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rust-wasm/" rel="tag"># Rust, Wasm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/ntruprime-wasm-demo/" rel="next" title="NTRUPRime Wasm Demo">
+                <i class="fa fa-chevron-left"></i> NTRUPRime Wasm Demo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Mitchell Berry</p>
+              <div class="site-description motion-element" itemprop="description">An assortment of digital tidbits.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Requirements"><span class="nav-number">1.</span> <span class="nav-text">Requirements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-Started"><span class="nav-number">2.</span> <span class="nav-text">Getting Started</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Running-a-local-development-server"><span class="nav-number">2.0.1.</span> <span class="nav-text">Running a local development server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Wasm-Pack-Build-Error"><span class="nav-number">2.0.2.</span> <span class="nav-text">Wasm-Pack Build Error</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#Adding-functionality"><span class="nav-number">3.</span> <span class="nav-text">Adding functionality</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Adding-a-button-to-generate-a-keypair"><span class="nav-number">3.0.1.</span> <span class="nav-text">Adding a button to generate a keypair.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debugging"><span class="nav-number">4.</span> <span class="nav-text">Debugging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Logging"><span class="nav-number">5.</span> <span class="nav-text">Logging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-Size"><span class="nav-number">6.</span> <span class="nav-text">Binary Size</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mitchell Berry</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+<script>
+    $('.highlight').prepend($('<button>').addClass('copy-btn')
+        .append("Copy").on('click', function(e) {
+        console.log(e);
+        var code = $(e.target).parent().find('.code').find('.line').map(function(i, e){
+        return $(e).text()
+      }).toArray().join('\n')
+      e.currentTarget.textContent = 'Copied!';
+      revertButton(e, 5000);
+      var ta = document.createElement('textarea')
+      document.body.appendChild(ta)
+      ta.style.position = 'fixed'
+      ta.style.top = 0
+      ta.style.left = 0
+      ta.value = code
+      ta.select()
+      ta.focus()
+      document.execCommand('copy')
+      document.body.removeChild(ta)
+
+    }))
+    function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async function revertButton(e, time){
+        await sleep(time);
+        e.currentTarget.textContent = 'Copy';
+    }
+</script>
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
